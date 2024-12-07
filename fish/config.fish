@@ -7,4 +7,5 @@ end
 
 alias tmux='tmux -u'
 export TERM=kitty
+export MANPAGER='nvim +Man!'
 oh-my-posh init fish --config $HOME/.config/omp/catppuccin-mocha.omp.json | source
