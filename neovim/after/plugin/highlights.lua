@@ -1,0 +1,1 @@
+ApplyColorscheme(defscheme)

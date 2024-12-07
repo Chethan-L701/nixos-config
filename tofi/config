@@ -1,0 +1,46 @@
+# Font
+font = Mononoki Nerd Font
+font-size = 14
+
+# Window Style
+horizontal = true
+anchor = top
+width = 100%
+height = 40
+
+outline-width = 0
+border-width = 0
+min-input-width = 120
+result-spacing = 30
+padding-top = 8
+padding-bottom = 0
+padding-left = 20
+padding-right = 0
+
+# Text style
+prompt-text = "run: "
+prompt-padding = 30
+
+background-color = #1e1e1e
+text-color = #f2eded
+
+prompt-background = #1e1e1e
+prompt-background-padding = 4, 10
+prompt-background-corner-radius = 8
+
+input-color = #1e1e1e
+input-background = #e64565
+input-background-padding = 4, 10
+input-background-corner-radius = 8
+
+alternate-result-background = #1e1e1e
+alternate-result-background-padding = 4, 10
+alternate-result-background-corner-radius = 8
+
+selection-color = #f0d2af
+selection-background = #694dbd
+selection-background-padding = 4, 10
+selection-background-corner-radius = 12
+selection-match-color = #fff
+
+clip-to-padding = false
