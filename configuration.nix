@@ -238,6 +238,7 @@
 			protonup
 			lutris
 			obs-studio
+			imagemagick
 	];
 
 	environment.variables = {
