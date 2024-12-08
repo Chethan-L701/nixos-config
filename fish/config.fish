@@ -19,3 +19,5 @@ carapace _carapace | source
 alias tmux='tmux -u'
 alias vi='nvim'
 alias snvim='sudo -E nvim'
+
+set PATH $PATH:/home/chethan/scripts
