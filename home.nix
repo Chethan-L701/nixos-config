@@ -87,6 +87,7 @@
 				package = pkgs.catppuccin-cursors.mochaDark;
 				size = 24;
 		}; 
+        
 # Let Home Manager install and manage itself.
 		programs.home-manager.enable = true;
 }

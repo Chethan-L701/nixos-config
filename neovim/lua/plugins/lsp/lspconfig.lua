@@ -101,7 +101,6 @@ return {
                 },
             })
             lspconfig.cssls.setup({})
-            -- lspconfig.pylyzer.setup({})
             lspconfig.pyright.setup({})
             lspconfig.ols.setup({})
             lspconfig.cmake.setup({})
@@ -113,11 +112,10 @@ return {
                     "--inlay-hints=true",
                     "--clang-tidy",
                     "--std=c++2c",
-                    "--cuda-path=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v12.6"
                 },
             })
             lspconfig.zls.setup({
-                root_dir = util.root_pattern("zls.json", "build.zig", ".git")
+                root_dir = util.root_pattern("zls.json", "build.zig", ".git"),
             })
             -- Global mappings.
             -- See `:help vim.diagnostic.*` for documentation on any of the below functions

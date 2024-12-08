@@ -48,6 +48,17 @@
 # Enable the X11 windowing system.
 	services.xserver.enable = true;
 
+# Touchpad configuration
+
+    services.libinput.enable = true;
+    services.libinput.touchpad = {
+        middleEmulation = true;
+        naturalScrolling = true;
+        tapping = true;
+        disableWhileTyping = false;
+    };
+
+
 # Enable the GNOME Desktop Environment.
 	services.xserver.displayManager.gdm.enable = true;
 # services.xserver.desktopManager.gnome.enable = true;
@@ -114,7 +125,6 @@
 	};
 
 # Enable touchpad support (enabled default in most desktopManager).
-# services.xserver.libinput.enable = true;
 
 
 # sleep settings
@@ -181,6 +191,7 @@
 				ninja
 				gcc
 				clang-tools
+                nodejs
 				bun
 				cudaPackages.cudatoolkit
 				cudaPackages.cuda_nvcc
@@ -210,6 +221,7 @@
 # Install Fish Shell
 	programs.fish.enable = true;
 	users.defaultUserShell = pkgs.fish;
+
 # Steam
 	programs.steam.enable = true;
 	programs.steam.gamescopeSession.enable = true;
@@ -238,6 +250,8 @@
 			protonup
 			lutris
 			obs-studio
+			usbutils
+			uhubctl
 			imagemagick
 	];
 
@@ -276,5 +290,5 @@
 # this value at the release version of the first install of this system.
 # Before changing this value read the documentation for this option
 # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-	system.stateVersion = "24.05"; # Did you read the comment?
+	system.stateVersion = "unstable"; # Did you read the comment?
 }
