@@ -11,6 +11,7 @@ return {
         dependencies = {
             "nvim-neotest/nvim-nio",
         },
+        lazy = true,
         config = function()
             local dap = require("dap")
 

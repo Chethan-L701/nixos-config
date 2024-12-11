@@ -18,6 +18,7 @@ require("lazy").setup({
     { import = "plugins.lsp" },
     { import = "plugins.git" },
 }, {
+    lockfile = vim.fn.getenv('HOME') .. "/lazy-lock.json",
     install = {
         missing = true,
         colorscheme = { defscheme },

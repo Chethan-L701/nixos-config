@@ -45,6 +45,9 @@
 		LC_TIME = "en_IN";
 	};
 
+# Enable gps location services
+    services.gpsd.enable = true;
+
 # Enable the X11 windowing system.
 	services.xserver.enable = true;
 

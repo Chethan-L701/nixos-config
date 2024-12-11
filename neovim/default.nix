@@ -7,12 +7,14 @@
 			luajitPackages.luarocks-nix
 			lua-language-server
 			luajitPackages.jsregexp
+            luajitPackages.magick
 			stylua
 			inputs.neovim-nightly-overlay.packages.${pkgs.system}.default
 	];
 
     xdg.configFile.neovim = {
         enable = true;
+        recursive = true;
 		source = config.lib.file.mkOutOfStoreSymlink ../neovim;
 		target = "nvim";
 	};
