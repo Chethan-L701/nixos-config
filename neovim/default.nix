@@ -4,11 +4,7 @@
     home.packages = with pkgs; [
         neovim-remote
         nixfmt-rfc-style
-        lua51Packages.lua
-        luajitPackages.luarocks-nix
         lua-language-server
-        luajitPackages.jsregexp
-        luajitPackages.magick
         stylua
         inputs.neovim-nightly-overlay.packages.${pkgs.system}.default
     ];

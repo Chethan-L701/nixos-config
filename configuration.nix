@@ -199,6 +199,10 @@
 				cudaPackages.cudatoolkit
 				cudaPackages.cuda_nvcc
 				rustup
+                lua51Packages.lua
+                luajitPackages.luarocks-nix
+                luajitPackages.jsregexp
+                luajitPackages.magick
 
 # ui
 				waybar
