@@ -1,5 +1,5 @@
 {config, ...} : {
-    xdg.configFile.ranger = {
-        # ranger config
-    };
+    # xdg.configFile.ranger = {
+    #     # ranger config
+    # };
 }
