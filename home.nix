@@ -6,7 +6,7 @@
 		home.username = "chethan";
 		home.homeDirectory = "/home/chethan";
 
-                imports = [./neovim ./python ./tmux ./hypr ./kitty ./waybar ./tofi ./wofi ./omp ./fish ./spicetify];
+                imports = [./neovim ./python ./tmux ./hypr ./kitty ./waybar ./dunst ./tofi ./wofi ./omp ./fish ./spicetify];
 # This value determines the Home Manager release that your configuration is
 # compatible with. This helps avoid breakage when a new Home Manager release
 # introduces backwards incompatible changes.
