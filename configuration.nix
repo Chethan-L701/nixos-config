@@ -160,6 +160,7 @@
 				tmux
 				fzf
 				lf
+                ranger
 				tree
 				gh
 				pavucontrol
