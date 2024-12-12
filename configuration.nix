@@ -191,6 +191,7 @@
 
 # compilers
 				cmake
+                cmake-language-server
 				ninja
 				gcc
 				clang-tools
