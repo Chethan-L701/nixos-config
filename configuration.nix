@@ -272,6 +272,7 @@
 		MOZ_ENABLE_WAYLAND = "1";
 		XCURSOR_THEME = "catppuccin-mocha-dark-cursors";
 		STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+        RANGER_LOAD_DEFUALT_RC = false;
 	};
 
 # Some programs need SUID wrappers, can be configured further or are
