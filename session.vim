@@ -13,12 +13,13 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +23 neovim/default.nix
-badd +14 man://ps(1)
+badd +9 home.nix
+badd +4 scripts/default.nix
 argglobal
 %argdel
-edit neovim/default.nix
+edit scripts/default.nix
 argglobal
+balt home.nix
 setlocal foldmethod=manual
 setlocal foldexpr=0
 setlocal foldmarker={{{,}}}
@@ -28,17 +29,15 @@ setlocal foldminlines=1
 setlocal foldnestmax=0
 setlocal foldenable
 silent! normal! zE
-4,10fold
-12,17fold
-19,25fold
-1,26fold
+2,6fold
+1,7fold
 let &fdl = &fdl
 let s:l = 4 - ((3 * winheight(0) + 22) / 44)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 4
-normal! 027|
+normal! 052|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
