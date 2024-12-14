@@ -262,6 +262,7 @@
 			usbutils
 			uhubctl
 			imagemagick
+            eog
             bat
             tesseract
 	];
