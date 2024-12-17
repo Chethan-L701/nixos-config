@@ -182,7 +182,8 @@
 				hwinfo
 				lm_sensors
 				killall
-				gimp
+	            davinci-resolve
+                gimp
 				tofi
 				ffmpeg
 				hyprshot
@@ -263,6 +264,7 @@
 			uhubctl
 			imagemagick
             eog
+            feh
             bat
             tesseract
 	];
