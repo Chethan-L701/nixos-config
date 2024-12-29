@@ -5,14 +5,6 @@
       ppkgs.numpy
       ppkgs.matplotlib
       ppkgs.pandas
-      ppkgs.keras
-      ppkgs.scikit-learn
-      ppkgs.torch
-      ppkgs.streamlit
-      ppkgs.nltk
-      ppkgs.flask
-      ppkgs.torchvision
-      ppkgs.tensorflow
       ppkgs.autopep8
     ]))
   ];

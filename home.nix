@@ -6,7 +6,7 @@
 		home.username = "chethan";
 		home.homeDirectory = "/home/chethan";
 
-                imports = [./neovim ./python ./tmux ./hypr ./kitty ./waybar ./dunst ./tofi ./wofi ./omp ./fish ./spicetify ./scripts ./ranger];
+                imports = [./neovim ./python ./tmux ./hypr ./kitty ./waybar ./dunst ./tofi ./wofi ./omp ./fish ./spicetify ./scripts ./ranger ];
 # This value determines the Home Manager release that your configuration is
 # compatible with. This helps avoid breakage when a new Home Manager release
 # introduces backwards incompatible changes.
@@ -19,6 +19,7 @@
 # The home.packages option allows you to install Nix packages into your
 # environment.
 				home.packages = [
+                    inputs.hyprland-qtutils.packages."${pkgs.system}".default
 # # Adds the 'hello' command to your environment. It prints a friendly
 # # "Hello, world!" when run.
 # pkgs.hello

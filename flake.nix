@@ -3,6 +3,7 @@
 
 	inputs = {
 		nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+        hyprland-qtutils.url = "github:hyprwm/hyprland-qtutils";
 		spicetify-nix = {
 			url = "github:Gerg-L/spicetify-nix";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -14,7 +15,7 @@
 		neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 	};
 
-	outputs = inputs@{ self, nixpkgs, home-manager, spicetify-nix, ... }: let
+	outputs = inputs@{ self, nixpkgs, home-manager, spicetify-nix, hyprland-qtutils,... }: let
 		system = "x86_64-linux";
 	in {
 		nixosConfigurations.default = nixpkgs.lib.nixosSystem {

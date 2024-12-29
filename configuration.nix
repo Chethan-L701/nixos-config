@@ -62,8 +62,13 @@
     };
 
 
-# Enable the GNOME Desktop Environment.
-	services.xserver.displayManager.gdm.enable = true;
+# Enable the SDDM Display Manager.
+    services.displayManager.sddm = {
+        enable = true;
+        theme = "catppuccin-mocha";
+        package = pkgs.kdePackages.sddm;
+    };
+# services.xserver.displayManager.gdm.enable = true;
 # services.xserver.desktopManager.gnome.enable = true;
 
 # Enable Hyprland
@@ -154,6 +159,7 @@
 
 # utils
 				ripgrep
+                obsidian
 				fd
 				lshw
 				htop
@@ -195,7 +201,8 @@
 				cmake
                 cmake-language-server
 				ninja
-				gcc
+                llvmPackages.clang
+                llvmPackages.libcxx
 				clang-tools
                 nodejs
 				bun
@@ -223,7 +230,22 @@
 	};
 
 # Install firefox.
-	programs.firefox.enable = true;
+
+
+    nixpkgs.overlays =
+        let
+        # Change this to a rev sha to pin
+        moz-rev = "master";
+        moz-url = builtins.fetchTarball { url = "https://github.com/mozilla/nixpkgs-mozilla/archive/${moz-rev}.tar.gz";};
+        nightlyOverlay = (import "${moz-url}/firefox-overlay.nix");
+        in [
+            nightlyOverlay
+        ];
+    programs.firefox = {
+        enable = true;
+        package= pkgs.latest.firefox-nightly-bin;
+    };
+
 	programs.dconf.enable = true;
 # Install Neovim
 
@@ -233,9 +255,6 @@
 	users.defaultUserShell = pkgs.fish;
 
 # Steam
-	programs.steam.enable = true;
-	programs.steam.gamescopeSession.enable = true;
-	programs.gamemode.enable = true;
 
 # Allow unfree packages
 	nixpkgs.config.allowUnfree = true;
@@ -256,8 +275,6 @@
 			git
 			bluez
 			wirelesstools
-			mangohud
-			protonup
 			lutris
 			obs-studio
 			usbutils
@@ -267,6 +284,15 @@
             feh
             bat
             tesseract
+            (
+             pkgs.catppuccin-sddm.override {
+             flavor = "mocha";
+             font  = "Mononoki Nerd Font";
+             fontSize = "14";
+             background = "${./wallpapers/wa_left.png}";
+             loginBackground = true;
+             }
+            )
 	];
 
 	environment.variables = {
@@ -291,7 +317,7 @@
 # List services that you want to enable:
 
 # Enable the OpenSSH daemon.
-# services.openssh.enable = true;
+services.openssh.enable = true;
 
 # Open ports in the firewall.
 # networking.firewall.allowedTCPPorts = [ ... ];
