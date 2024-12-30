@@ -29,7 +29,7 @@
 			"format": "{icon}",
 			"on-click": "activate",
 			"format-icons": {
-				"active": " ",
+				"active": "",
 			},
 			"sort-by-number": true,
 			"persistent-workspaces": {

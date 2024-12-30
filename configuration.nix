@@ -1,4 +1,4 @@
-# Edit this configuration file to define what should be installed on
+# Edit this configuration file to define what should be installed oncon
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
@@ -141,6 +141,9 @@
 		lidSwitchExternalPower = "ignore";
 	};
 
+# Flatpak
+    services.flatpak.enable = true;
+
 # Define a user account. Don't forget to set a password with ‘passwd’.
 	users.users.chethan = {
 		isNormalUser = true;
@@ -247,7 +250,6 @@
     };
 
 	programs.dconf.enable = true;
-# Install Neovim
 
 
 # Install Fish Shell
@@ -255,6 +257,12 @@
 	users.defaultUserShell = pkgs.fish;
 
 # Steam
+
+    programs.steam = {
+        enable = true;
+        gamescopeSession.enable = true;
+    };
+    programs.gamemode.enable = true;
 
 # Allow unfree packages
 	nixpkgs.config.allowUnfree = true;
@@ -273,16 +281,21 @@
 		    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
 			wget
 			git
-			bluez
+            cava	
+            peaclock
+            bluez
 			wirelesstools
 			lutris
+            winePackages.waylandFull
 			obs-studio
 			usbutils
 			uhubctl
 			imagemagick
+            protonup
             eog
             feh
             bat
+            mpvpaper
             tesseract
             (
              pkgs.catppuccin-sddm.override {

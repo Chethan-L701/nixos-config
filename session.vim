@@ -13,11 +13,13 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +9 home.nix
+badd +51 hypr/hyprland.conf
+badd +2 hypr/hyprpaper.conf
 argglobal
 %argdel
-edit home.nix
+edit hypr/hyprpaper.conf
 argglobal
+balt hypr/hyprland.conf
 setlocal foldmethod=manual
 setlocal foldexpr=0
 setlocal foldmarker={{{,}}}
@@ -27,21 +29,13 @@ setlocal foldminlines=1
 setlocal foldnestmax=0
 setlocal foldenable
 silent! normal! zE
-21,39fold
-43,54fold
-72,76fold
-79,82fold
-77,83fold
-84,90fold
-3,94fold
-1,94fold
 let &fdl = &fdl
-let s:l = 9 - ((8 * winheight(0) + 22) / 44)
+let s:l = 2 - ((1 * winheight(0) + 22) / 44)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 9
-normal! 0135|
+keepjumps 2
+normal! 049|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
