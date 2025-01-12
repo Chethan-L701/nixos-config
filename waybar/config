@@ -52,7 +52,7 @@
 			"critical-threshold": 80,
 			"format": "{icon} {temperatureC}°C",
 			"format-icons": ["", "", ""],
-                        "on-click": "kitty bash -c 'killall read &> /dev/null; sensors; read'"
+                        "on-click": "kitty bash -c 'watch -n 0.2 sensors;'"
 		},
 		"battery": {
 			"states": {

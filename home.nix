@@ -6,7 +6,7 @@
 		home.username = "chethan";
 		home.homeDirectory = "/home/chethan";
 
-                imports = [./neovim ./python ./tmux ./hypr ./kitty ./waybar ./dunst ./tofi ./wofi ./omp ./fish ./spicetify ./scripts ./ranger ];
+                imports = [./neovim ./python ./tmux ./hypr ./kitty ./ghostty ./waybar ./dunst ./tofi ./wofi ./omp ./fish ./spicetify ./scripts ./ranger ];
 # This value determines the Home Manager release that your configuration is
 # compatible with. This helps avoid breakage when a new Home Manager release
 # introduces backwards incompatible changes.
@@ -72,7 +72,6 @@
 		home.sessionVariables = {
 				EDITOR = "nvim";
 				MANPAGER = "nvim +Man!";
-				TERMINAL = "kitty";
 		};
 		gtk = {
 				enable = true;

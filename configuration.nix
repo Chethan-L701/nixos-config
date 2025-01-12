@@ -69,12 +69,13 @@
         package = pkgs.kdePackages.sddm;
     };
 # services.xserver.displayManager.gdm.enable = true;
-# services.xserver.desktopManager.gnome.enable = true;
+services.xserver.desktopManager.gnome.enable = true;
 
 # Enable Hyprland
 	programs.hyprland = {
 		enable = true;
 		xwayland.enable = true;
+        withUWSM = true;
 	};
 	programs.hyprlock.enable = true;
 
@@ -117,7 +118,7 @@
 	};
 
 # Enable sound with pipewire.
-	hardware.pulseaudio.enable = false;
+	services.pulseaudio.enable = false;
 	security.rtkit.enable = true;
 	services.pipewire = {
 		enable = true;
@@ -153,7 +154,6 @@
 
 
 #terminal emulator
-			kitty
 
 # shell
 				oh-my-posh
@@ -204,12 +204,10 @@
 				cmake
                 cmake-language-server
 				ninja
-                llvmPackages.clang
-                llvmPackages.libcxx
-				clang-tools
                 nodejs
 				bun
 				cudaPackages.cudatoolkit
+                cudaPackages.cuda_cudart
 				cudaPackages.cuda_nvcc
 				rustup
                 lua51Packages.lua
@@ -223,7 +221,6 @@
 				xdg-desktop-portal-hyprland
 				hyprpaper      
 				ags
-				nautilus
 
 # social
 				whatsapp-for-linux
@@ -279,14 +276,18 @@
 # $ nix search wget
 	environment.systemPackages = with pkgs; [
 		    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+            libmtp
+            zellij
+	    ghostty
 			wget
 			git
             cava	
+			kitty
+            openssl
             peaclock
             bluez
 			wirelesstools
 			lutris
-            winePackages.waylandFull
 			obs-studio
 			usbutils
 			uhubctl
@@ -297,6 +298,9 @@
             bat
             mpvpaper
             tesseract
+            llvmPackages.clang
+            llvmPackages.libcxx
+            clang-tools
             (
              pkgs.catppuccin-sddm.override {
              flavor = "mocha";
@@ -309,9 +313,8 @@
 	];
 
 	environment.variables = {
-		TERMINAL = "kitty";
+        NIXPKGS_ALLOW_UNFREE = "1";
 		BROWSER = "firefox";
-		TERM = "kitty";
 		EDITOR = "nvim";
 		MOZ_ENABLE_WAYLAND = "1";
 		XCURSOR_THEME = "catppuccin-mocha-dark-cursors";
@@ -328,6 +331,10 @@
 # };
 
 # List services that you want to enable:
+
+#gvfs
+
+services.gvfs.enable = true;
 
 # Enable the OpenSSH daemon.
 services.openssh.enable = true;
