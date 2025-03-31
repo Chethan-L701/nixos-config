@@ -1,21 +1,21 @@
 {
 	description = "Nixos config flake";
 
-	inputs = {
-		nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-        hyprland-qtutils.url = "github:hyprwm/hyprland-qtutils";
-		spicetify-nix = {
-			url = "github:Gerg-L/spicetify-nix";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
-		home-manager = {
-			url = "github:nix-community/home-manager";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
-		neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-	};
+    inputs = {
+        nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+        hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+        spicetify-nix = {
+            url = "github:Gerg-L/spicetify-nix";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        home-manager = {
+            url = "github:nix-community/home-manager";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    };
 
-	outputs = inputs@{ self, nixpkgs, home-manager, spicetify-nix, hyprland-qtutils, ... }: let
+	outputs = inputs@{ self, nixpkgs, home-manager, spicetify-nix, hyprpanel, ... }: let
 		system = "x86_64-linux";
 	in {
         nixosConfigurations.default = nixpkgs.lib.nixosSystem {
@@ -36,6 +36,7 @@
                 {
                     nixpkgs = {
                         overlays = [
+                            hyprpanel.overlay
                         ];
                     };
                 }

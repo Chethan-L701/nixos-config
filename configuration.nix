@@ -18,6 +18,7 @@
 	nix.settings.experimental-features = ["nix-command" "flakes"];
 
 	networking.hostName = "nixos"; # Define your hostname.
+    networking.nameservers = ["1.1.1.1" "8.8.8.8"];
 #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
 # Configure network proxy if necessary
@@ -69,7 +70,9 @@
         package = pkgs.kdePackages.sddm;
     };
 # services.xserver.displayManager.gdm.enable = true;
-services.xserver.desktopManager.gnome.enable = true;
+    services.xserver.desktopManager.gnome.enable = true;
+    environment.gnome.excludePackages = with pkgs.gnome; [
+    ];
 
 # Enable Hyprland
 	programs.hyprland = {
@@ -163,6 +166,7 @@ services.xserver.desktopManager.gnome.enable = true;
 # utils
 				ripgrep
                 obsidian
+                zathura
 				fd
 				lshw
 				htop
@@ -191,7 +195,7 @@ services.xserver.desktopManager.gnome.enable = true;
 				hwinfo
 				lm_sensors
 				killall
-	            davinci-resolve
+				kdePackages.kdenlive
                 gimp
 				tofi
 				ffmpeg
@@ -220,7 +224,6 @@ services.xserver.desktopManager.gnome.enable = true;
 				wofi
 				xdg-desktop-portal-hyprland
 				hyprpaper      
-				ags
 
 # social
 				whatsapp-for-linux
@@ -274,45 +277,53 @@ services.xserver.desktopManager.gnome.enable = true;
 
 # List packages installed in system profile. To search, run:
 # $ nix search wget
-	environment.systemPackages = with pkgs; [
-		    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-            libmtp
-            zellij
-	    ghostty
-			wget
-			git
-            cava	
-			kitty
-            openssl
-            peaclock
-            bluez
-			wirelesstools
-			lutris
-			obs-studio
-			usbutils
-			uhubctl
-			imagemagick
-            protonup
-            eog
-            feh
-            bat
-            mpvpaper
-            tesseract
-            llvmPackages.clang
-            llvmPackages.libcxx
-            clang-tools
-            (
-             pkgs.catppuccin-sddm.override {
-             flavor = "mocha";
-             font  = "Mononoki Nerd Font";
-             fontSize = "14";
-             background = "${./wallpapers/wa_left.png}";
-             loginBackground = true;
-             }
-            )
-	];
+    environment.systemPackages = with pkgs; [
+        vscode
+        opera
+        vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+        linux-firmware
+        hyprlang
+        hyprpanel
+        hyprland-qtutils
+        libmtp
+        zellij
+        direnv
+        ghostty
+        wget
+        git
+        cava	
+        kitty
+        openssl
+        peaclock
+        bluez
+        wirelesstools
+        lutris
+        obs-studio
+        usbutils
+        uhubctl
+        imagemagick
+        protonup
+        eog
+        feh
+        bat
+        mpvpaper
+        tesseract
+        llvmPackages.clang
+        llvmPackages.libcxx
+        clang-tools
+        (
+            pkgs.catppuccin-sddm.override {
+            flavor = "mocha";
+            font  = "Mononoki Nerd Font";
+            fontSize = "14";
+            background = "${./wallpapers/wa_left.png}";
+            loginBackground = true;
+            }
+        )
+    ];
 
 	environment.variables = {
+        XDG_CURRENT_DESKTOP = "Hyprland";
         NIXPKGS_ALLOW_UNFREE = "1";
 		BROWSER = "firefox";
 		EDITOR = "nvim";
@@ -351,5 +362,5 @@ services.openssh.enable = true;
 # this value at the release version of the first install of this system.
 # Before changing this value read the documentation for this option
 # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-	system.stateVersion = "unstable"; # Did you read the comment?
+	system.stateVersion = "25.05"; # Did you read the comment?
 }

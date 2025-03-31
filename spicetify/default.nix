@@ -11,7 +11,6 @@ in {
 
   # configure spicetify :)
   programs.spicetify = rec {
-    spicetifyPackage = pkgs.spicetify-cli;
     enable = true;
     theme = spicePkgs.themes.catppuccin;
     colorScheme = "mocha";

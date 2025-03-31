@@ -1,7 +1,7 @@
 {pkgs, inputs, config, ...}: 
 {
     programs.carapace = {
-        enable = false;
+        enable = true;
         enableFishIntegration = true;
     };
 }

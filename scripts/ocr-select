@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 hyprshot -m region -f tmp/ocr.jpg
-tesseract ~/tmp/ocr.jpg ~/tmp/ocr 
+tesseract ~/Pictures/tmp/ocr.jpg ~/tmp/ocr 
 wl-copy < ~/tmp/ocr.txt
-rm -rf ~/tmp/*
+rm -rf ~/tmp/*; rm -rf ~/Pictures/tmp/*

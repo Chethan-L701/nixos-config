@@ -1,6 +1,5 @@
 {config, pkgs, inputs,... }: {
 
-    nixpkgs.overlays = [ inputs.neovim-nightly-overlay.overlay.default ];
     home.packages = with pkgs; [
         neovim-remote
         nixfmt-rfc-style
