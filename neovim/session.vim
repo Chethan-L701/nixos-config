@@ -13,13 +13,11 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +5 init.lua
-badd +1 /etc/nixos/neovim/lua/plugins/ui/monochrome.lua
+badd +7 /etc/nixos/neovim/lua/plugins/ui/menu.lua
 argglobal
 %argdel
-edit /etc/nixos/neovim/lua/plugins/ui/monochrome.lua
+edit /etc/nixos/neovim/lua/plugins/ui/menu.lua
 argglobal
-balt init.lua
 setlocal foldmethod=manual
 setlocal foldexpr=0
 setlocal foldmarker={{{,}}}
@@ -29,14 +27,17 @@ setlocal foldminlines=1
 setlocal foldnestmax=0
 setlocal foldenable
 silent! normal! zE
-1,3fold
+sil! 6,16fold
+sil! 5,17fold
+sil! 3,19fold
+sil! 1,20fold
 let &fdl = &fdl
-let s:l = 3 - ((2 * winheight(0) + 22) / 44)
+let s:l = 8 - ((7 * winheight(0) + 20) / 41)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 3
-normal! 04|
+keepjumps 8
+normal! 0
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

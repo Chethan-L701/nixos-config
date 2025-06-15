@@ -10,9 +10,22 @@
 		./hardware-configuration.nix
 		];
 
+    hardware.enableRedistributableFirmware = true;
+    hardware.ipu6.enable = true;
+    hardware.ipu6.platform = "ipu6ep";
 # Bootloader.
+
+    hardware.firmware = with pkgs; [
+        ivsc-firmware
+        ipu6-camera-bins
+        linux-firmware
+    ];
+    boot.blacklistedKernelModules = [ "uvcvideo" ];
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
+    boot.kernelModules = ["kvm-intel"];
+    environment.etc.camera.source = "${pkgs.ipu6ep-camera-hal}/share/defaults/etc/camera";
+
 
 # Enable Flakes and Nix Command
 	nix.settings.experimental-features = ["nix-command" "flakes"];
@@ -26,8 +39,9 @@
 # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
 # Enable networking
-		networking.networkmanager.enable = true;
-
+	networking.networkmanager.enable = true;
+# virtual box
+    virtualisation.virtualbox.host.enable = true;
 # Set your time zone.
 	time.timeZone = "Asia/Kolkata";
 
@@ -64,13 +78,14 @@
 
 
 # Enable the SDDM Display Manager.
-    services.displayManager.sddm = {
-        enable = true;
-        theme = "catppuccin-mocha";
-        package = pkgs.kdePackages.sddm;
-    };
-# services.xserver.displayManager.gdm.enable = true;
-    services.xserver.desktopManager.gnome.enable = true;
+    # services.displayManager.sddm = {
+    #     enable = true;
+    #     theme = "catppuccin-mocha";
+    #     package = pkgs.kdePackages.sddm;
+    # };
+# Enable the GDM Display Manager.
+    services.displayManager.gdm.enable = true;
+    services.desktopManager.gnome.enable = true;
     environment.gnome.excludePackages = with pkgs.gnome; [
     ];
 
@@ -162,11 +177,14 @@
 				oh-my-posh
 				fishPlugins.done
 				fishPlugins.fzf-fish
+                zoxide
 
 # utils
 				ripgrep
                 obsidian
                 zathura
+                texliveFull
+                texpresso
 				fd
 				lshw
 				htop
@@ -246,7 +264,7 @@
         ];
     programs.firefox = {
         enable = true;
-        package= pkgs.latest.firefox-nightly-bin;
+        package= pkgs.latest.firefox-bin;
     };
 
 	programs.dconf.enable = true;
@@ -278,32 +296,35 @@
 # List packages installed in system profile. To search, run:
 # $ nix search wget
     environment.systemPackages = with pkgs; [
+        linuxPackages.ipu6-drivers
+        v4l-utils
+        gst_all_1.gstreamer
+        gst_all_1.icamerasrc-ipu6ep
+        ipu6ep-camera-hal
         vscode
-        opera
-        vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-        linux-firmware
+        vim         
         hyprlang
         hyprpanel
         hyprland-qtutils
         libmtp
-        zellij
-        direnv
         ghostty
         wget
         git
         cava	
         kitty
+        ipu6-camera-bins
+        ipu6-camera-hal
         openssl
         peaclock
         bluez
         wirelesstools
         lutris
+        wineWow64Packages.full
         obs-studio
         usbutils
         uhubctl
         imagemagick
         protonup
-        eog
         feh
         bat
         mpvpaper
