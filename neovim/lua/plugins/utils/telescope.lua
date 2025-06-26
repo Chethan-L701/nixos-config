@@ -59,13 +59,13 @@ return {
         })
         vim.keymap.set({ "n", "v" }, "<leader>fg", function()
             require("telescope.builtin").git_files()
-        end, { desc = "grep git files" })
+        end, { desc = "grep files" })
         vim.keymap.set({ "n", "v" }, "<leader>ff", function()
             require("telescope.builtin").find_files()
-        end, { desc = "grep git files" })
+        end, { desc = "grep files" })
         vim.keymap.set({ "n", "v" }, "<leader>fa", function()
-            require("telescope.builtin").find_files({ hidden = true })
-        end, { desc = "grep git files" })
+            require("telescope.builtin").find_files({ hidden = true, no_ignore = true })
+        end, { desc = "grep all files" })
     end,
     keys = {
         { "<leader>ff", desc = "Find Files" },

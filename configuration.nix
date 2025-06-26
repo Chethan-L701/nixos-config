@@ -180,6 +180,7 @@
                 zoxide
 
 # utils
+                blender
 				ripgrep
                 obsidian
                 zathura
@@ -264,7 +265,6 @@
         ];
     programs.firefox = {
         enable = true;
-        package= pkgs.latest.firefox-bin;
     };
 
 	programs.dconf.enable = true;
@@ -297,6 +297,7 @@
 # $ nix search wget
     environment.systemPackages = with pkgs; [
         linuxPackages.ipu6-drivers
+        networkmanagerapplet
         v4l-utils
         gst_all_1.gstreamer
         gst_all_1.icamerasrc-ipu6ep
@@ -346,7 +347,7 @@
 	environment.variables = {
         XDG_CURRENT_DESKTOP = "Hyprland";
         NIXPKGS_ALLOW_UNFREE = "1";
-		BROWSER = "firefox";
+		BROWSER = "app.zen_browser.zen";
 		EDITOR = "nvim";
 		MOZ_ENABLE_WAYLAND = "1";
 		XCURSOR_THEME = "catppuccin-mocha-dark-cursors";
@@ -365,7 +366,6 @@
 # List services that you want to enable:
 
 #gvfs
-
 services.gvfs.enable = true;
 
 # Enable the OpenSSH daemon.

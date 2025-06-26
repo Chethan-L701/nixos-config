@@ -4,7 +4,7 @@ font-family = Mononoki Nerd Font
 font-size = 14
 cursor-color = 
 cursor-opacity = 1
-background-opacity = 1
+background-opacity = 0.7
 
 
 window-decoration = false
