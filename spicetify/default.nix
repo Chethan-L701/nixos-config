@@ -16,10 +16,6 @@ in {
     colorScheme = "mocha";
 
     enabledCustomApps = with spicePkgs.apps; [
-      newReleases
-      localFiles
-      marketplace
-      ncsVisualizer
     ];
     enabledExtensions = with spicePkgs.extensions; [
     ];

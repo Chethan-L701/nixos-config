@@ -1,38 +1,33 @@
-{ lib
-    , qtbase
-        , qtsvg
-        , qtgraphicaleffects
-        , qtquickcontrols2
-        , wrapQtAppsHook
-        , stdenvNoCC
-        , fetchFromGitHub
-}: {
-    sddm-astronaut = stdenvNoCC.mkDerivation
-        rec {
-            pname = "tokyo-night-sddm";
-            version = "1..0";
-            dontBuild = true;
-            src = fetchFromGitHub {
-                "owner" = "Keyitdev";
-                "repo" =  "sddm-astronaut-theme";
-                "rev" = "11c0bf6147bbea466ce2e2b0559e9a9abdbcc7c3";
-                "hash" = "sha256-gBSz+k/qgEaIWh1Txdgwlou/Lfrfv3ABzyxYwlrLjDk=";
-            };
-            nativeBuildInputs = [
-                wrapQtAppsHook
-            ];
+{ config, pkgs, ... }:
 
-            propagatedUserEnvPkgs = [
-                qtbase
-                    qtsvg
-                    qtgraphicaleffects
-                    qtquickcontrols2
-            ];
+let
+  custom-sddm-astronaut = pkgs.sddm-astronaut.override {
+    embeddedTheme = "hyprland_kath";
+  };
 
-            installPhase = ''
-                mkdir -p $out/share/sddm/themes
-                cp -aR $src $out/share/sddm/themes/sddm-astronaut-theme
-                '';
+in {
+  services.displayManager.sddm = {
+    enable = true;
+    wayland = {
+      enable = true;
+      compositor = "weston";
+    };
+    autoNumlock = true;
+    enableHidpi = true;
+    theme = "sddm-astronaut-theme";
+    settings = {
+      Theme = {
+        Current = "sddm-astronaut-theme";
+        CursorSize = 24;
+      };
+    };
+    extraPackages = with pkgs; [
+      custom-sddm-astronaut
+    ];
+  };
 
-        };
+  environment.systemPackages = with pkgs; [
+    custom-sddm-astronaut
+    kdePackages.qtmultimedia
+  ];
 }

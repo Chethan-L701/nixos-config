@@ -13,4 +13,4 @@ insensitive=true
 allow_images=true
 image_size=28
 gtk_dark=false
-term=kitty
+term=ghostty

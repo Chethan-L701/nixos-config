@@ -38,4 +38,4 @@ vim.keymap.set("n", "<leader>sg", function()
     vim.cmd [[Lazy load sg.nvim]]
 end, { desc = "load the sourcegraph plugin and enable cody autocompletion" })
 
-vim.keymap.set({ "n", "i" }, "<C-]>", "<cmd>bnext<cr>", { desc = "rotate buffers" })
+vim.keymap.set({ "n", "i" }, "<C-]>", "<cmd>bnext<cr>", { desc = "rotate buffers forwards" })

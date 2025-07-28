@@ -5,47 +5,56 @@
 { config, pkgs, inputs, ... }:
 
 {
+    system.stateVersion = "25.05";
+
+    # Allow unfree packages
+	nixpkgs.config.allowUnfree = true;
+
+    # Enable Flakes and Nix Command
+    nix.settings.experimental-features = ["nix-command" "flakes"];
+
 	imports =
 		[ # Include the results of the hardware scan.
 		./hardware-configuration.nix
+        # ./sddm/sddm-astronaut.nix
 		];
 
     hardware.enableRedistributableFirmware = true;
     hardware.ipu6.enable = true;
     hardware.ipu6.platform = "ipu6ep";
-# Bootloader.
 
+    # Bootloader.
     hardware.firmware = with pkgs; [
         ivsc-firmware
         ipu6-camera-bins
         linux-firmware
     ];
-    boot.blacklistedKernelModules = [ "uvcvideo" ];
+
+    # boot.blacklistedKernelModules = [ "uvcvideo" ];
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
-    boot.kernelModules = ["kvm-intel"];
+    boot.kernelModules = ["kvm-intel" "v4l2loopback" ];
+    boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
     environment.etc.camera.source = "${pkgs.ipu6ep-camera-hal}/share/defaults/etc/camera";
-
-
-# Enable Flakes and Nix Command
-	nix.settings.experimental-features = ["nix-command" "flakes"];
 
 	networking.hostName = "nixos"; # Define your hostname.
     networking.nameservers = ["1.1.1.1" "8.8.8.8"];
-#networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-# Configure network proxy if necessary
-# networking.proxy.default = "http://user:password@proxy:port/";
-# networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+    # Configure network proxy if necessary
+    # networking.proxy.default = "http://user:password@proxy:port/";
+    # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-# Enable networking
+    # Enable networking
 	networking.networkmanager.enable = true;
-# virtual box
+    # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+    # virtual box
     virtualisation.virtualbox.host.enable = true;
-# Set your time zone.
+
+    # Set your time zone.
 	time.timeZone = "Asia/Kolkata";
 
-# Select internationalisation properties.
+    # Select internationalisation properties.
 	i18n.defaultLocale = "en_IN";
 
 	i18n.extraLocaleSettings = {
@@ -60,14 +69,17 @@
 		LC_TIME = "en_IN";
 	};
 
-# Enable gps location services
-    services.gpsd.enable = true;
+    # Enable gps location services
+    services.gpsd = {
+        enable = true;
+        # devices = [ "/dev/ttyACM0" ];
+        # extraArgs = [ "-n" ]; # optional: tells gpsd to start reading even if no client is connected
+    };
 
-# Enable the X11 windowing system.
+    # Enable the X11 windowing system.
 	services.xserver.enable = true;
 
-# Touchpad configuration
-
+    # Enable touchpad support (enabled default in most desktopManager).
     services.libinput.enable = true;
     services.libinput.touchpad = {
         middleEmulation = true;
@@ -76,20 +88,34 @@
         disableWhileTyping = false;
     };
 
-
-# Enable the SDDM Display Manager.
+    # Enable the SDDM Display Manager.
     # services.displayManager.sddm = {
     #     enable = true;
-    #     theme = "catppuccin-mocha";
     #     package = pkgs.kdePackages.sddm;
     # };
-# Enable the GDM Display Manager.
+
+    # Enable the GDM Display Manager.
     services.displayManager.gdm.enable = true;
     services.desktopManager.gnome.enable = true;
     environment.gnome.excludePackages = with pkgs.gnome; [
     ];
 
-# Enable Hyprland
+    # sleep settings
+	services.logind = {
+		lidSwitch = "ignore";
+		lidSwitchExternalPower = "ignore";
+	};
+
+    # Enable CUPS to print documents.
+	services.printing.enable = true;
+
+    # Configure keymap in X11
+	services.xserver.xkb = {
+		layout = "us";
+		variant = "";
+	};
+
+    # Enable Hyprland
 	programs.hyprland = {
 		enable = true;
 		xwayland.enable = true;
@@ -97,23 +123,18 @@
 	};
 	programs.hyprlock.enable = true;
 
-# Configure keymap in X11
-	services.xserver.xkb = {
-		layout = "us";
-		variant = "";
-	};
+    # Install Fish Shell
+	programs.fish.enable = true;
+	users.defaultUserShell = pkgs.fish;
 
-# Enable CUPS to print documents.
-	services.printing.enable = true;
-
-# Graphics And Graphics Driver Settings
-	hardware.graphics.enable = true;
-
-# bluetooth
+    # bluetooth
 	hardware.bluetooth = {
 		enable = true;
 		powerOnBoot = true;
 	};
+
+    # Graphics And Graphics Driver Settings
+	hardware.graphics.enable = true;
 
 	services.xserver.videoDrivers = ["nvidia"];
 
@@ -129,13 +150,13 @@
 				enable = true;
 				enableOffloadCmd = true;
 			};
-# sync.enable = true;
+            # sync.enable = true;
 			intelBusId = "PCI:0:2:0";
 			nvidiaBusId = "PCI:1:0:0";
 		};
 	};
 
-# Enable sound with pipewire.
+    # Enable sound with pipewire.
 	services.pulseaudio.enable = false;
 	security.rtkit.enable = true;
 	services.pipewire = {
@@ -143,211 +164,224 @@
 		alsa.enable = true;
 		alsa.support32Bit = true;
 		pulse.enable = true;
-# If you want to use JACK applications, uncomment this
-#jack.enable = true;
+        # If you want to use JACK applications, uncomment this
+        #jack.enable = true;
 
-# use the example session manager (no others are packaged yet so this is enabled by default,
-# no need to redefine it in your config for now)
-#media-session.enable = true;
+        # use the example session manager (no others are packaged yet so this is enabled by default,
+        # no need to redefine it in your config for now)
+        #media-session.enable = true;
 	};
 
-# Enable touchpad support (enabled default in most desktopManager).
 
-
-# sleep settings
-	services.logind = {
-		lidSwitch = "ignore";
-		lidSwitchExternalPower = "ignore";
-	};
-
-# Flatpak
+    # Flatpak
     services.flatpak.enable = true;
 
-# Define a user account. Don't forget to set a password with ‘passwd’.
+    # Define a user account. Don't forget to set a password with ‘passwd’.
 	users.users.chethan = {
 		isNormalUser = true;
 		description = "chethan";
 		extraGroups = [ "networkmanager" "wheel" ];
 		packages = with pkgs; [
+        # shell tools
+            oh-my-posh                                          # theme the fish prompt 
+            fishPlugins.done                                    # get exit codes
+            fishPlugins.fzf-fish                                # fzf integration for fish shell
+            zoxide                                              # better cd
 
+        # files
+            fd                                                  # better find command
+            fzf                                                 # fuzzy find tool
+            yazi                                                # neovim style tui file explorer
+            tree                                                # get the tree view of the files
 
-#terminal emulator
+        # notes and documents
+            obsidian                                            # an extensive document and note taking software
+            zathura                                             # pdf reader
+            texliveFull                                         # view the live latex preview while editing
+            texpresso                                           # latex tools
 
-# shell
-				oh-my-posh
-				fishPlugins.done
-				fishPlugins.fzf-fish
-                zoxide
+        # utils
+            ripgrep                                             # better grep tool
+            unzip                                               # to extract zip files
+            unrar                                               # to extract winrar files
+            lsd                                                 # prettier ls command
+            gemini-cli                                          # google gemini ai code agent
+            tmux                                                # a terminal multiplexer
+            gh                                                  # cli tool to manage github 
+            fastfetch                                           # prints basic info on the system and its status
+            conky                                               # monitoring tool
+            killall                                             # uses name of the program to kill all the instance of the program running
 
-# utils
-                blender
-				ripgrep
-                obsidian
-                zathura
-                texliveFull
-                texpresso
-				fd
-				lshw
-				htop
-				tmux
-				fzf
-				lf
-                ranger
-				tree
-				gh
-				pavucontrol
-				brightnessctl
-				wl-clipboard
-				nvtopPackages.nvidia
-				nvtopPackages.intel
-				acpi
-				acpid
-				fastfetch
-				ncdu
-				fastfetch
-				conky
-				vnstat
-				playerctl
-				radeontop
-				android-tools
-				usbguard
-				hwinfo
-				lm_sensors
-				killall
-				kdePackages.kdenlive
-                gimp
-				tofi
-				ffmpeg
-				hyprshot
-# notifications
-				dunst
-				libnotify
+        # notifications
+            dunst                                               # a notification deamon
+            libnotify                                           # library for notification tools
 
-# compilers
-				cmake
-                cmake-language-server
-				ninja
-                nodejs
-				bun
-				cudaPackages.cudatoolkit
-                cudaPackages.cuda_cudart
-				cudaPackages.cuda_nvcc
-				rustup
-                lua51Packages.lua
-                luajitPackages.luarocks-nix
-                luajitPackages.jsregexp
-                luajitPackages.magick
+        # compilers and language tools(lsp, debugger, build tools, etc.)
+            nodejs                                              # javascript runtime with npm
+            rustup                                              # management tool for rust language
+            lua51Packages.lua                                   # lua language interpreter
+            cmake                                               # configuration tools C/C++ language
+            cmake-language-server                               # LSP for cmake configuration language
+            ninja                                               # build tool for C/C++ (alternative to make)
+            emmet-ls                                            # LSP and Snippets for HTML
+            vscode-json-languageserver                          # LSP for json
+            vscode-css-languageserver                           # LSP for css
+            typescript-language-server                          # LSP for javascript and typescript
+            bun                                                 # JS/TS runtime
+            cudaPackages.cudatoolkit                            # nvidia cuda tookit for GPU programming
+            cudaPackages.cuda_cudart                            # extra cuda tools
+            cudaPackages.cuda_nvcc                              # compiler for cuda
+            luajitPackages.luarocks-nix                         # luarocks : package manager for lua
+            luajitPackages.jsregexp                             # lua package to create and parse JSON
+            luajitPackages.magick                               # lua package for libmagick ( images )
 
-# ui
-				waybar
-				wofi
-				xdg-desktop-portal-hyprland
-				hyprpaper      
+        # ides
+            godot                                               # Game development software
 
-# social
-				whatsapp-for-linux
-				discord
-				betterdiscordctl
-				];
+        # ui
+            waybar                                              # Status bar
+            wofi                                                # app launcher
+            tofi                                                # demu alternative
+            cava                                                # Audia visualizer
+
+        # social
+            whatsapp-for-linux                                  # Private messaging tool
+            discord                                             # Social Connectivity Software with channels
+            betterdiscordctl                                    # Extend Discord capabilities
+
+        # media
+            mpvc                                                # vlc ui for mpv
+            kew                                                 # tui based audio player
+            kdePackages.kdenlive                                # video editing software
+            gimp                                                # Image editing software
+		];
 	};
 
-# Install firefox.
-
-
-    nixpkgs.overlays =
-        let
-        # Change this to a rev sha to pin
-        moz-rev = "master";
-        moz-url = builtins.fetchTarball { url = "https://github.com/mozilla/nixpkgs-mozilla/archive/${moz-rev}.tar.gz";};
-        nightlyOverlay = (import "${moz-url}/firefox-overlay.nix");
-        in [
-            nightlyOverlay
-        ];
+    # Install firefox.
     programs.firefox = {
         enable = true;
     };
 
 	programs.dconf.enable = true;
 
-
-# Install Fish Shell
-	programs.fish.enable = true;
-	users.defaultUserShell = pkgs.fish;
-
-# Steam
-
+    # Steam
     programs.steam = {
         enable = true;
         gamescopeSession.enable = true;
     };
     programs.gamemode.enable = true;
 
-# Allow unfree packages
-	nixpkgs.config.allowUnfree = true;
 
-# Install Fonts
-
+    # Install Fonts
 	fonts.packages= with pkgs;[
 		nerd-fonts.fira-code
-			nerd-fonts.jetbrains-mono
-			nerd-fonts.mononoki
+        nerd-fonts.jetbrains-mono
+        nerd-fonts.mononoki
 	];
 
-# List packages installed in system profile. To search, run:
-# $ nix search wget
+    # List packages installed in system profile. To search, run:
     environment.systemPackages = with pkgs; [
-        linuxPackages.ipu6-drivers
-        networkmanagerapplet
+    #editors
+        vscode                                                  # code editor by microsoft
+        vim                                                     # vim
+        emacs                                                   # emacs
+
+    #hyprland and window management tools
+        hyprsunset                                              # reduce blue light from screen
+        hyprlang                                                # hyprland language support
+        hyprpanel                                               # status panel
+        hyprland-qtutils                                        # hyprland tools
+        mpvpaper                                                # wallpaper engine (static, slideshow, live video, etc.)
+        inputs.quickshell.packages.${pkgs.system}.default       # to create widgets using QML
+        hyprshot                                                # screenshot tool
+        xdg-desktop-portal-hyprland                             # xwayland support hyprland
+        hyprpaper                                               # set wallpaper (static)
+
+    #camera (doesn't work)
         v4l-utils
         gst_all_1.gstreamer
         gst_all_1.icamerasrc-ipu6ep
         ipu6ep-camera-hal
-        vscode
-        vim         
-        hyprlang
-        hyprpanel
-        hyprland-qtutils
-        libmtp
-        ghostty
-        wget
-        git
-        cava	
-        kitty
+        libcamera
         ipu6-camera-bins
         ipu6-camera-hal
-        openssl
-        peaclock
-        bluez
-        wirelesstools
-        lutris
-        wineWow64Packages.full
-        obs-studio
-        usbutils
-        uhubctl
-        imagemagick
-        protonup
-        feh
-        bat
-        mpvpaper
-        tesseract
-        llvmPackages.clang
-        llvmPackages.libcxx
+        linuxPackages.ipu6-drivers
+
+    #terminals
+        ghostty                                                 # terminal emulator
+        kitty                                                   # terminal emulator fallback
+
+    #media
+        ffmpeg                                                  # vidoe codecs and other manipulation tools
+        obs-studio                                              # screen recording
+        mpv                                                     # playing video and audio
+
+    #cli tolls
+        feh                                                     # image viewer
+        bat                                                     # better cat
+        peaclock                                                # tui clock
+
+    #compilers and co. tools
+        llvmPackages.clang                                      # LLVM C/C++ language compiler
+        llvmPackages.libcxx                                     # LLVM C/C++ language library
         clang-tools
+
+    #emulation
+        lutris                                                  # wrapper for wine emulation
+        wineWow64Packages.full                                  # run exe files (windows apps) on linux
+        protonup                                                # proton engine for emulation
+
+    #communication and network
+        networkmanagerapplet                                    # network manager tools
+        libmtp                                                  # MTP protocal help file communication btw android and linux
+        bluez                                                   # bluetooth management tools
+        wirelesstools                                           # iwconfig, etc.,
+        openssl                                                 # openssl library
+
+    #monitoring tools
+        usbutils                                                # tools to configure and monitor usb parts
+        pciutils                                                # tools to configure and monitor pci port in the main board
+        uhubctl                                                 # manage connected usbs
+        lshw                                                    # ls for hardware
+        nvtopPackages.nvidia                                    # monitor nvidia GPU usage
+        nvtopPackages.intel                                     # monitor intel GPU usage
+        lm_sensors                                              # sensor tools
+        android-tools                                           # tools such as adb to communicate with android
+        usbguard                                                # firewall for usb
+        hwinfo                                                  # print all the hardware info
+        acpi                                                    # battery monitoring and management tool
+        acpid                                                   # acpi deamon
+        vnstat                                                  # network monitoring tool
+        ncdu                                                    # storage analysis tool
+        htop                                                    # better top (task manager)
+
+    #ctl
+        pavucontrol                                             # pulse audio volume control
+        brightnessctl                                           # control the screen brightness
+        playerctl                                               # media controls for next, prev , puase , play , etc.
+
+    #other tools
+        tesseract                                               # ocr tool
+        wget                                                    # similar to curl
+        git                                                     # version control
+        imagemagick                                             # image manipulation tool
+        wl-clipboard                                            # clipboard for wayland
+
         (
             pkgs.catppuccin-sddm.override {
             flavor = "mocha";
             font  = "Mononoki Nerd Font";
             fontSize = "14";
-            background = "${./wallpapers/wa_left.png}";
+            background = "${/etc/nixos/wallpapers/wa_left.png}";
             loginBackground = true;
             }
-        )
+        )                                                       # catppuccin theme for sddm login screen
     ];
 
 	environment.variables = {
         XDG_CURRENT_DESKTOP = "Hyprland";
         NIXPKGS_ALLOW_UNFREE = "1";
-		BROWSER = "app.zen_browser.zen";
+		BROWSER = "firefox";
 		EDITOR = "nvim";
 		MOZ_ENABLE_WAYLAND = "1";
 		XCURSOR_THEME = "catppuccin-mocha-dark-cursors";
@@ -355,33 +389,22 @@
         RANGER_LOAD_DEFAULT_RC = "FALSE";
 	};
 
-# Some programs need SUID wrappers, can be configured further or are
-# started in user sessions.
-# programs.mtr.enable = true;
-# programs.gnupg.agent = {
-#   enable = true;
-#   enableSSHSupport = true;
-# };
+    # Some programs need SUID wrappers, can be configured further or are started in user sessions.
+    programs.mtr.enable = true;
+    programs.gnupg.agent = {
+        enable = true;
+        enableSSHSupport = true;
+    };
 
-# List services that you want to enable:
+    # gvfs
+    services.gvfs.enable = true;
 
-#gvfs
-services.gvfs.enable = true;
+    # Enable the OpenSSH daemon.
+    services.openssh.enable = true;
 
-# Enable the OpenSSH daemon.
-services.openssh.enable = true;
-
-# Open ports in the firewall.
-# networking.firewall.allowedTCPPorts = [ ... ];
-# networking.firewall.allowedUDPPorts = [ ... ];
-# Or disable the firewall altogether.
-# networking.firewall.enable = false;
-
-# This value determines the NixOS release from which the default
-# settings for stateful data, like file locations and database versions
-# on your system were taken. It‘s perfectly fine and recommended to leave
-# this value at the release version of the first install of this system.
-# Before changing this value read the documentation for this option
-# (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-	system.stateVersion = "25.05"; # Did you read the comment?
+    # Open ports in the firewall.
+    # networking.firewall.allowedTCPPorts = [ ... ];
+    # networking.firewall.allowedUDPPorts = [ ... ];
+    # Or disable the firewall altogether.
+    # networking.firewall.enable = false;
 }
