@@ -3,15 +3,6 @@ mc=false
 tc=false
 
 # this a script to show git branch name
-untracked() {
-    local val=$(git -C "$1" ls-files --others --exclude-standard 2>/dev/null | wc -l)
-    if [ "$val" -gt 0 ]; then
-        echo "#[fg=colour203,bg=default,bold]$val"
-        uc=true
-    else
-        echo ""
-    fi
-}
 get_git_status() {
     local dir="$1"
     local untracked=$(git -C "$dir" ls-files --others --exclude-standard 2>/dev/null | wc -l)
@@ -36,11 +27,11 @@ get_git_status() {
     fi
 
     if [ "$upstream_count" -gt 0 ]; then
-        status_info+="#[fg=colour250,bg=default,bold] ↑$upstream_count"
+        status_info+="#[fg=colour250,bg=default,bold]  ↑$upstream_count"
     fi
 
     if [ "$downstream_count" -gt 0 ]; then
-        status_info+="#[fg=colour250,bg=default,bold] ↓$downstream_count"
+        status_info+="#[fg=colour250,bg=default,bold]  ↓$downstream_count"
     fi
 
     echo "$status_info"
@@ -50,10 +41,14 @@ current_dir="$dir"
 
 close() {
     local status_info="$1"
-    if ["$status_info" -eq ""]; then
+
+    # Strip all newlines and spaces
+    local cleaned=$(echo "$status_info" | tr -d '\n\r[:space:]')
+
+    if [[ -z "$cleaned" ]]; then
         echo ""
     else
-        echo "#[fg=colour245,bg=default,bold] "
+        echo '#[fg=colour245,bg=default,bold] '
     fi
 }
 
@@ -62,7 +57,7 @@ while [ "$current_dir" != "/" ]; do
         branch=$(git -C "$current_dir" rev-parse --abbrev-ref HEAD 2>/dev/null)
         if [ -n "$branch" ]; then
             status_info=$(get_git_status "$current_dir")
-            echo " #[fg=colour245,bg=default,bold] $branch #[fg=colour245,bg=default,bold]$status_info$(close $status_info)"
+            echo " #[fg=colour245,bg=default,bold] $branch #[fg=colour240,bg=default,bold]$status_info$(close $status_info)"
         else
             echo ""
         fi
