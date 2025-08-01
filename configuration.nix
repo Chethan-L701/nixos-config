@@ -1,8 +1,8 @@
-# Edit this configuration file to define what should be installed oncon
+# Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
     system.stateVersion = "25.05";
@@ -69,6 +69,8 @@
 		LC_TIME = "en_IN";
 	};
 
+    i18n.extraLocales = ["kn_IN/UTF-8" "hi_IN/UTF-8" "zh_CN.UTF-8/UTF-8"];
+
     # Enable gps location services
     services.gpsd = {
         enable = true;
@@ -97,8 +99,19 @@
     # Enable the GDM Display Manager.
     services.displayManager.gdm.enable = true;
     services.desktopManager.gnome.enable = true;
-    environment.gnome.excludePackages = with pkgs.gnome; [
+    environment.gnome.excludePackages = with pkgs; [
+        gnome-online-accounts
+        geary
+        evolution-ews
+        evolution
+        evolution-data-server
+        gnome-tour
+        gnome-maps
+        gnome-calendar
+        evolutionWithPlugins
     ];
+    services.gnome.gnome-online-accounts.enable = false;
+    services.gnome.evolution-data-server.enable = lib.mkForce false;
 
     # sleep settings
 	services.logind = {
@@ -172,6 +185,14 @@
         #media-session.enable = true;
 	};
 
+    console = {
+        enable = true;
+        font = "ter-v20n";
+        packages = [
+            pkgs.terminus_font
+        ];
+    };
+
 
     # Flatpak
     services.flatpak.enable = true;
@@ -217,23 +238,31 @@
             libnotify                                           # library for notification tools
 
         # compilers and language tools(lsp, debugger, build tools, etc.)
-            nodejs                                              # javascript runtime with npm
-            rustup                                              # management tool for rust language
-            lua51Packages.lua                                   # lua language interpreter
+            #C/C++
             cmake                                               # configuration tools C/C++ language
-            cmake-language-server                               # LSP for cmake configuration language
             ninja                                               # build tool for C/C++ (alternative to make)
+            cmake-language-server                               # LSP for cmake configuration language
+            # web
+            nodejs                                              # javascript runtime with npm
             emmet-ls                                            # LSP and Snippets for HTML
+            bun                                                 # JS/TS runtime
             vscode-json-languageserver                          # LSP for json
             vscode-css-languageserver                           # LSP for css
             typescript-language-server                          # LSP for javascript and typescript
-            bun                                                 # JS/TS runtime
-            cudaPackages.cudatoolkit                            # nvidia cuda tookit for GPU programming
-            cudaPackages.cuda_cudart                            # extra cuda tools
-            cudaPackages.cuda_nvcc                              # compiler for cuda
+            # nvim and wez
+            lua51Packages.lua                                   # lua language interpreter
             luajitPackages.luarocks-nix                         # luarocks : package manager for lua
             luajitPackages.jsregexp                             # lua package to create and parse JSON
             luajitPackages.magick                               # lua package for libmagick ( images )
+            # rust
+            rustup                                              # management tool for rust language
+            # cuda
+            cudaPackages.cudatoolkit                            # nvidia cuda tookit for GPU programming
+            cudaPackages.cuda_cudart                            # extra cuda tools
+            cudaPackages.cuda_nvcc                              # compiler for cuda
+            #odin
+            odin
+            ols
 
         # ides
             godot                                               # Game development software
@@ -245,6 +274,7 @@
             cava                                                # Audia visualizer
 
         # social
+            thunderbird                                         # Email client
             whatsapp-for-linux                                  # Private messaging tool
             discord                                             # Social Connectivity Software with channels
             betterdiscordctl                                    # Extend Discord capabilities
@@ -274,9 +304,13 @@
 
     # Install Fonts
 	fonts.packages= with pkgs;[
-		nerd-fonts.fira-code
+        noto-fonts
+        noto-fonts-cjk-sans
+        noto-fonts-emoji
+        nerd-fonts.fira-code
         nerd-fonts.jetbrains-mono
         nerd-fonts.mononoki
+        nerd-fonts.ubuntu
 	];
 
     # List packages installed in system profile. To search, run:
@@ -334,7 +368,7 @@
     #communication and network
         networkmanagerapplet                                    # network manager tools
         libmtp                                                  # MTP protocal help file communication btw android and linux
-        bluez                                                   # bluetooth management tools
+        bluez-experimental                                      # bluetooth management tools
         wirelesstools                                           # iwconfig, etc.,
         openssl                                                 # openssl library
 
@@ -359,6 +393,14 @@
         pavucontrol                                             # pulse audio volume control
         brightnessctl                                           # control the screen brightness
         playerctl                                               # media controls for next, prev , puase , play , etc.
+
+    # keyboard and inputs
+        kanata-with-cmd
+
+    # locales, fonts and text rendering
+        pango                                                   # Library for laying out and rendering of text
+        harfbuzz                                                # Text shaping engine
+        fontconfig                                              # Library for font customization and configuration
 
     #other tools
         tesseract                                               # ocr tool
@@ -401,6 +443,16 @@
 
     # Enable the OpenSSH daemon.
     services.openssh.enable = true;
+
+    services.kanata = {
+    enable = true;
+    keyboards = {
+      all = {
+        configFile = /home/chethan/.config/kanata/kanata.kbd;
+        port = 6969;
+      };
+    };
+  };
 
     # Open ports in the firewall.
     # networking.firewall.allowedTCPPorts = [ ... ];

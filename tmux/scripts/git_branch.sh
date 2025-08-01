@@ -24,23 +24,23 @@ get_git_status() {
     local status_info=""
 
     if [ "$untracked" -gt 0 ]; then
-        status_info+="#[fg=colour203,bg=default,bold] $untracked"
+        status_info+="#[fg=colour250,bg=default,bold] $untracked"
     fi
 
     if [ "$modified" -gt 0 ]; then
-        status_info+="#[fg=colour221,bg=default,bold]  $modified"
+        status_info+="#[fg=colour250,bg=default,bold]  $modified"
     fi
 
     if [ "$added" -gt 0 ]; then
-        status_info+="#[fg=colour78,bg=default,bold]  $added"
+        status_info+="#[fg=colour250,bg=default,bold]  $added"
     fi
 
     if [ "$upstream_count" -gt 0 ]; then
-        status_info+="#[fg=colour117,bg=default,bold] ↑$upstream_count"
+        status_info+="#[fg=colour250,bg=default,bold] ↑$upstream_count"
     fi
 
     if [ "$downstream_count" -gt 0 ]; then
-        status_info+="#[fg=colour117,bg=default,bold] ↓$downstream_count"
+        status_info+="#[fg=colour250,bg=default,bold] ↓$downstream_count"
     fi
 
     echo "$status_info"
@@ -53,7 +53,7 @@ close() {
     if ["$status_info" -eq ""]; then
         echo ""
     else
-        echo "#[fg=colour99,bg=default,bold] "
+        echo "#[fg=colour245,bg=default,bold] "
     fi
 }
 
@@ -62,7 +62,7 @@ while [ "$current_dir" != "/" ]; do
         branch=$(git -C "$current_dir" rev-parse --abbrev-ref HEAD 2>/dev/null)
         if [ -n "$branch" ]; then
             status_info=$(get_git_status "$current_dir")
-            echo " #[fg=colour99,bg=default,bold] $branch #[fg=colour99,bg=default,bold]$status_info$(close $status_info)"
+            echo " #[fg=colour245,bg=default,bold] $branch #[fg=colour245,bg=default,bold]$status_info$(close $status_info)"
         else
             echo ""
         fi

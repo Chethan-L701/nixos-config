@@ -16,6 +16,8 @@
             url = "github:quickshell-mirror/quickshell";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        astal.url = "github:aylur/astal";
+        ags.url = "github:aylur/ags"; 
     };
 
 	outputs = inputs@{ self, nixpkgs, home-manager, spicetify-nix, ... }: let
