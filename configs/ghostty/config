@@ -1,0 +1,18 @@
+theme = Catppuccin Mocha
+
+font-family = Mononoki Nerd Font
+font-size = 14
+cursor-color = 
+cursor-opacity = 1
+background-opacity = 1
+
+
+window-decoration = false
+window-padding-x = 12
+window-padding-y = 12
+gtk-tabs-location = hidden
+
+keybind = ctrl+alt+\=new_split:right
+keybind = ctrl+alt+-=new_split:down
+
+resize-overlay-position = bottom-right

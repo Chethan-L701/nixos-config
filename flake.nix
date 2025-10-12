@@ -11,13 +11,17 @@
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-        quickshell = {
-            url = "github:quickshell-mirror/quickshell";
-            inputs.nixpkgs.follows = "nixpkgs";
+        hyprland.url = "github:hyprwm/Hyprland";
+        hyprland-plugins = {
+            url = "github:hyprwm/hyprland-plugins";
+            inputs.hyprland.follows = "hyprland";
         };
-        astal.url = "github:aylur/astal";
-        ags.url = "github:aylur/ags"; 
+        neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+        vicinae.url = "github:vicinaehq/vicinae";
+        catppuccin.url = "github:catppuccin/nix";
+
+        listwindows.url = "github:Chethan-L701/listwindows";
+        kanata-client.url = "github:Chethan-L701/kanata-client";
     };
 
 	outputs = inputs@{ self, nixpkgs, home-manager, spicetify-nix, ... }: let

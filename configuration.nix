@@ -15,8 +15,10 @@
 
 	imports =
 		[ # Include the results of the hardware scan.
-		./hardware-configuration.nix
-        # ./sddm/sddm-astronaut.nix
+            ./hardware-configuration.nix
+            ./services/vicinae.nix
+            ./fixes.nix
+            # ./sddm/sddm-astronaut.nix
 		];
 
     hardware.enableRedistributableFirmware = true;
@@ -49,7 +51,8 @@
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
     # virtual box
-    virtualisation.virtualbox.host.enable = true;
+    # virtualisation.virtualbox.host.enable = true;
+    virtualisation.waydroid.enable = true;
 
     # Set your time zone.
 	time.timeZone = "Asia/Kolkata";
@@ -115,8 +118,12 @@
 
     # sleep settings
 	services.logind = {
-		lidSwitch = "ignore";
-		lidSwitchExternalPower = "ignore";
+        settings = {
+            Login = {
+                HandleLidSwitch = "ignore";
+                HandleLidSwitchExternalPower = "ignore";
+            };
+        };
 	};
 
     # Enable CUPS to print documents.
@@ -127,7 +134,8 @@
 		layout = "us";
 		variant = "";
 	};
-
+    # xwayland
+    programs.xwayland.enable = true;
     # Enable Hyprland
 	programs.hyprland = {
 		enable = true;
@@ -136,15 +144,30 @@
 	};
 	programs.hyprlock.enable = true;
 
+    # niri wm
+    programs.niri.enable = true;
+
     # Install Fish Shell
 	programs.fish.enable = true;
 	users.defaultUserShell = pkgs.fish;
 
+
     # bluetooth
-	hardware.bluetooth = {
-		enable = true;
-		powerOnBoot = true;
-	};
+    hardware.bluetooth = {
+        enable = true;
+        powerOnBoot = true;
+        settings = {
+            General = {
+                Experimental = true;
+                # You might also want to add other settings here, like:
+                # ControllerMode = "dual"; # For dual mode (BR/EDR and LE)
+                # FastConnectable = true;
+            };
+            Policy = {
+                AutoEnable = true;
+            };
+        };
+    };
 
     # Graphics And Graphics Driver Settings
 	hardware.graphics.enable = true;
@@ -218,8 +241,6 @@
         # notes and documents
             obsidian                                            # an extensive document and note taking software
             zathura                                             # pdf reader
-            texliveFull                                         # view the live latex preview while editing
-            texpresso                                           # latex tools
 
         # utils
             ripgrep                                             # better grep tool
@@ -230,18 +251,19 @@
             tmux                                                # a terminal multiplexer
             gh                                                  # cli tool to manage github 
             fastfetch                                           # prints basic info on the system and its status
-            conky                                               # monitoring tool
+            # conky                                               # monitoring tool
             killall                                             # uses name of the program to kill all the instance of the program running
+            swww
 
         # notifications
-            dunst                                               # a notification deamon
             libnotify                                           # library for notification tools
 
         # compilers and language tools(lsp, debugger, build tools, etc.)
             #C/C++
             cmake                                               # configuration tools C/C++ language
             ninja                                               # build tool for C/C++ (alternative to make)
-            cmake-language-server                               # LSP for cmake configuration language
+            # cmake-language-server                               # LSP for cmake configuration language
+
             # web
             nodejs                                              # javascript runtime with npm
             emmet-ls                                            # LSP and Snippets for HTML
@@ -249,28 +271,34 @@
             vscode-json-languageserver                          # LSP for json
             vscode-css-languageserver                           # LSP for css
             typescript-language-server                          # LSP for javascript and typescript
+
             # nvim and wez
             lua51Packages.lua                                   # lua language interpreter
             luajitPackages.luarocks-nix                         # luarocks : package manager for lua
             luajitPackages.jsregexp                             # lua package to create and parse JSON
             luajitPackages.magick                               # lua package for libmagick ( images )
+
             # rust
             rustup                                              # management tool for rust language
+
             # cuda
             cudaPackages.cudatoolkit                            # nvidia cuda tookit for GPU programming
             cudaPackages.cuda_cudart                            # extra cuda tools
             cudaPackages.cuda_nvcc                              # compiler for cuda
+
             #odin
             odin
             ols
 
-        # ides
+        # ides and editors
             godot                                               # Game development software
+            zed-editor                                          # minimal gui editor
 
         # ui
             waybar                                              # Status bar
             wofi                                                # app launcher
             tofi                                                # demu alternative
+            rofi                                                # OG rofi fork for wayland
             cava                                                # Audia visualizer
 
         # social
@@ -284,6 +312,8 @@
             kew                                                 # tui based audio player
             kdePackages.kdenlive                                # video editing software
             gimp                                                # Image editing software
+            
+            chromium                                            # base chromium browser
 		];
 	};
 
@@ -303,22 +333,25 @@
 
 
     # Install Fonts
-	fonts.packages= with pkgs;[
-        noto-fonts
-        noto-fonts-cjk-sans
-        noto-fonts-emoji
-        nerd-fonts.fira-code
-        nerd-fonts.jetbrains-mono
-        nerd-fonts.mononoki
-        nerd-fonts.ubuntu
-	];
+    fonts = {
+        fontDir.enable = true;
+        packages= with pkgs;[
+            material-symbols
+                noto-fonts
+                noto-fonts-cjk-sans
+                noto-fonts-emoji
+                nerd-fonts.fira-code
+                nerd-fonts.jetbrains-mono
+                nerd-fonts.mononoki
+                nerd-fonts.ubuntu
+        ];
+    };
 
     # List packages installed in system profile. To search, run:
     environment.systemPackages = with pkgs; [
     #editors
         vscode                                                  # code editor by microsoft
         vim                                                     # vim
-        emacs                                                   # emacs
 
     #hyprland and window management tools
         hyprsunset                                              # reduce blue light from screen
@@ -326,12 +359,15 @@
         hyprpanel                                               # status panel
         hyprland-qtutils                                        # hyprland tools
         mpvpaper                                                # wallpaper engine (static, slideshow, live video, etc.)
-        inputs.quickshell.packages.${pkgs.system}.default       # to create widgets using QML
+        hyprpaper                                               # set wallpaper (static)
+        inputs.vicinae.packages.${system}.default               # open source alternative to rayband for linux
         hyprshot                                                # screenshot tool
         xdg-desktop-portal-hyprland                             # xwayland support hyprland
-        hyprpaper                                               # set wallpaper (static)
+        xwayland-satellite                                      # niri needs it
 
-    #camera (doesn't work)
+        swaynotificationcenter                                  # a notification control center
+
+    #camera (doesn't work) :( 
         v4l-utils
         gst_all_1.gstreamer
         gst_all_1.icamerasrc-ipu6ep
@@ -354,11 +390,12 @@
         feh                                                     # image viewer
         bat                                                     # better cat
         peaclock                                                # tui clock
+        jq                                                      # json parsing tool
 
     #compilers and co. tools
         llvmPackages.clang                                      # LLVM C/C++ language compiler
         llvmPackages.libcxx                                     # LLVM C/C++ language library
-        clang-tools
+        clang-tools                                             # extra tools from llvm such formater, lsp, repl, etc for c/c++ development
 
     #emulation
         lutris                                                  # wrapper for wine emulation
@@ -369,6 +406,7 @@
         networkmanagerapplet                                    # network manager tools
         libmtp                                                  # MTP protocal help file communication btw android and linux
         bluez-experimental                                      # bluetooth management tools
+        bluetui                                                 # tui tool to manage bluetooth devices
         wirelesstools                                           # iwconfig, etc.,
         openssl                                                 # openssl library
 
@@ -401,23 +439,25 @@
         pango                                                   # Library for laying out and rendering of text
         harfbuzz                                                # Text shaping engine
         fontconfig                                              # Library for font customization and configuration
+        material-symbols                                        # Material icons for themes and apps
 
     #other tools
         tesseract                                               # ocr tool
-        wget                                                    # similar to curl
+        wget                                                    # similar to curl, fetch(get) things from web
+        socat                                                   # networking tool
         git                                                     # version control
         imagemagick                                             # image manipulation tool
         wl-clipboard                                            # clipboard for wayland
 
-        (
-            pkgs.catppuccin-sddm.override {
-            flavor = "mocha";
-            font  = "Mononoki Nerd Font";
-            fontSize = "14";
-            background = "${/etc/nixos/wallpapers/wa_left.png}";
-            loginBackground = true;
-            }
-        )                                                       # catppuccin theme for sddm login screen
+        # (
+        #     pkgs.catppuccin-sddm.override {
+        #     flavor = "mocha";
+        #     font  = "Mononoki Nerd Font";
+        #     fontSize = "14";
+        #     background = "${/etc/nixos/wallpapers/wa_left.png}";
+        #     loginBackground = true;
+        #     }
+        # )                                                       # catppuccin theme for sddm login screen
     ];
 
 	environment.variables = {
@@ -425,11 +465,19 @@
         NIXPKGS_ALLOW_UNFREE = "1";
 		BROWSER = "firefox";
 		EDITOR = "nvim";
-		MOZ_ENABLE_WAYLAND = "1";
 		XCURSOR_THEME = "catppuccin-mocha-dark-cursors";
 		STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-        RANGER_LOAD_DEFAULT_RC = "FALSE";
 	};
+
+    environment.sessionVariables = {
+		MOZ_ENABLE_WAYLAND = "1";
+        NIXOS_OZONE_WL = "1";
+    };
+
+    # kdeconnect
+    programs.kdeconnect = {
+        enable = true;
+    };
 
     # Some programs need SUID wrappers, can be configured further or are started in user sessions.
     programs.mtr.enable = true;
@@ -445,18 +493,40 @@
     services.openssh.enable = true;
 
     services.kanata = {
-    enable = true;
-    keyboards = {
-      all = {
-        configFile = /home/chethan/.config/kanata/kanata.kbd;
-        port = 6969;
-      };
+        enable = true;
+        keyboards = {
+            all = {
+                configFile = /home/chethan/.config/kanata/kanata.kbd;
+                port = 6969;
+            };
+        };
     };
-  };
 
-    # Open ports in the firewall.
-    # networking.firewall.allowedTCPPorts = [ ... ];
-    # networking.firewall.allowedUDPPorts = [ ... ];
+    # systemd.services.waydroid-container = {
+    #     serviceConfig = {
+    #         ExecStart = [
+    #             "" # clears the default ExecStart
+    #                 "${pkgs.waydroid}/bin/waydroid container start --hostnet"
+    #         ];
+    #     };
+    # };
+
+
+    networking = {
+
+        nat = {
+            enable = true;
+            internalInterfaces = [ "waydroid0" ];
+            externalInterface = "wlp4s0";
+        };
+
+        # Open ports in the firewall.
+        firewall = {
+            enable = true;
+            allowedTCPPorts = [ 53 ];
+            allowedUDPPorts = [ 53 67 ];
+        };
+    };
     # Or disable the firewall altogether.
     # networking.firewall.enable = false;
 }
