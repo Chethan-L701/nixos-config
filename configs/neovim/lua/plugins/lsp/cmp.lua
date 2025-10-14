@@ -187,7 +187,7 @@ return {
 
         local lspconfig = require("lspconfig")
         for _, lsp in ipairs(servers) do
-            lspconfig[lsp].setup({
+            vim.lsp.config(lsp, {
                 handlers = handler,
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)

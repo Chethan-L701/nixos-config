@@ -20,10 +20,9 @@ return {
         "neovim/nvim-lspconfig",
         config = function()
             local vim = vim
-            local lspconfig = require("lspconfig")
             local util = require("lspconfig.util")
 
-            require("lspconfig").lua_ls.setup({
+            vim.lsp.config('lua_ls', {
                 on_init = function(client)
                     local path = client.workspace_folders[1].name
                     if
@@ -60,8 +59,9 @@ return {
                     return true
                 end,
             })
+            vim.lsp.enable('lua_ls')
 
-            lspconfig.ts_ls.setup({
+            vim.lsp.config('ts_ls', {
                 init_options = {
                     preferences = {
                         includeInlayParameterNameHints = "all",
@@ -75,7 +75,9 @@ return {
                     },
                 },
             })
-            lspconfig.rust_analyzer.setup({
+            vim.lsp.enable('ts_ls')
+
+            vim.lsp.config('rust_analyzer', {
                 -- Server-specific settings. See `:help lspconfig-setup`
                 settings = {
                     ["rust-analyzer"] = {
@@ -88,8 +90,9 @@ return {
                     },
                 },
             })
+            vim.lsp.enable('rust_analyzer')
 
-            lspconfig.gopls.setup({
+            vim.lsp.config('gopls', {
                 settings = {
                     gopls = {
                         ["ui.inlayhint.hints"] = {
@@ -100,23 +103,28 @@ return {
                     },
                 },
             })
-            lspconfig.cssls.setup({})
-            lspconfig.pyright.setup({})
-            lspconfig.ols.setup({})
-            lspconfig.cmake.setup({})
-            lspconfig.emmet_ls.setup({})
-            lspconfig.jsonls.setup({})
-            lspconfig.clangd.setup({
+            vim.lsp.enable('gopls')
+
+            vim.lsp.enable('pyright')
+            vim.lsp.enable('ols')
+            vim.lsp.enable('cmake')
+            vim.lsp.enable('nixd')
+            vim.lsp.enable('emmet_ls')
+            vim.lsp.enable('jsonls')
+            vim.lsp.config('clangd', {
                 cmd = {
                     "clangd",
                     "--inlay-hints=true",
                     "--clang-tidy",
-                    "--std=c++2c",
+                    "--std=c++23",
                 },
             })
-            lspconfig.zls.setup({
+            vim.lsp.enable('clangd')
+            vim.lsp.config('zls', {
                 root_dir = util.root_pattern("zls.json", "build.zig", ".git"),
             })
+            vim.lsp.enable('zls')
+
             -- Global mappings.
             -- See `:help vim.diagnostic.*` for documentation on any of the below functions
             vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, { desc = "Open diagnostic Float" })
