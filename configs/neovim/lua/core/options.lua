@@ -13,6 +13,7 @@ vim.opt.showmode = false
 vim.opt.laststatus = 3
 vim.opt.signcolumn = "yes"
 vim.opt.pumheight = 15
+vim.opt.cmdheight = 0
 
 vim.opt.termguicolors = true
 vim.o.foldcolumn = "1" -- '0' is not bad

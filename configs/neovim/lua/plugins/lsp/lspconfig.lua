@@ -114,9 +114,7 @@ return {
             vim.lsp.config('clangd', {
                 cmd = {
                     "clangd",
-                    "--inlay-hints=true",
                     "--clang-tidy",
-                    "--std=c++23",
                 },
             })
             vim.lsp.enable('clangd')

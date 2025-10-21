@@ -16,6 +16,14 @@
     #media-session.enable = true;
   };
 
+  nixpkgs.overlays = [
+    (self: super: {
+      mpv = super.mpv.override {
+        scripts = [ self.mpvScripts.mpris ];
+      };
+    })
+  ];
+
   environment.systemPackages = with pkgs; [
     ffmpeg # vidoe codecs and other manipulation tools
     obs-studio # screen recording

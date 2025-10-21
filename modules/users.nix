@@ -13,6 +13,7 @@
     packages = with pkgs; [
       # shell tools
       oh-my-posh # theme the fish prompt
+      starship # The minimal, blazing-fast, and infinitely customizable prompt for any shell!
       fishPlugins.done # get exit codes
       fishPlugins.fzf-fish # fzf integration for fish shell
       zoxide # better cd
@@ -69,6 +70,9 @@
       kew # tui based audio player
       kdePackages.kdenlive # video editing software
       gimp # Image editing software
+      inkscape
+      mpd # music player
+      ncmpcpp # Featureful ncurses based MPD client inspired by ncmpc
 
       chromium # base chromium browser
     ];

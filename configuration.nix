@@ -22,6 +22,8 @@
     ./modules/hardware/networking.nix
     ./modules/hardware/media.nix
 
+    ./modules/desktop/bootloader.nix
+    ./modules/desktop/dm.nix
     ./modules/desktop/gnome.nix
     ./modules/desktop/wm.nix
 

@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 {
   # Enable the GDM Display Manager.
-  services.displayManager.gdm.enable = true;
+  # services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
   services.gvfs.enable = true;
 
