@@ -1,0 +1,86 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = false
+
+
+format = """
+$directory$git_branch$git_status$character
+"""
+
+right_format = """
+${env_var.NIX_DEV_SHELL} $shell
+"""
+
+[character]
+success_symbol = "[  ](bold fg:blue)"
+error_symbol = "[  ](bold fg:red)"
+
+[shell]
+fish_indicator = '󰈺 '
+unknown_indicator = '_'
+nu_indicator = ''
+format = "[$indicator](bold fg:#1e1e2e) "
+disabled = false
+
+[directory]
+home_symbol = " "
+read_only = " "
+truncation_length = 20
+truncation_symbol = "••/"
+format = '[$path](bold fg:green)'
+
+[directory.substitutions]
+"Desktop" = " "
+"Documents" = " "
+"Downloads" = " "
+"Music" = "󰎈 "
+"Pictures" = " "
+"Videos" = " "
+"GitHub" = "󰊤 "
+
+[username]
+style_user = "bold fg:black"
+style_root = "red bold"
+format = "[$user]($style)"
+disabled = false
+show_always = true
+
+[hostname]
+ssh_only = false
+format =  "[@$hostname](bold fg:black)"
+disabled = false
+
+[git_branch]
+style = "bg: cyan"
+symbol = "󰘬"
+truncation_length = 12
+truncation_symbol = ""
+format = " [$symbol $branch(:$remote_branch)](fg:#b4befe)"
+
+[git_status]
+conflicted = '🏳'
+ahead = ' ⇡${count}'
+diverged = ' ⇕⇡${ahead_count}⇣${behind_count}'
+behind = ' ⇣${count}'
+up_to_date = ''
+untracked = '  ${count}'
+stashed = '  '
+modified = '  ${count}'
+staged = '  ${count}'
+renamed = '  '
+deleted = '  '
+format = '[$untracked](fg:red)[$modified](fg:yellow)[$staged](fg:green)[$ahead_behind](fg:#f5c2e7)'
+
+
+[cmd_duration]
+min_time = 0
+format = '[󰪢 $duration](bold fg:#cdd6f4)'
+
+[env_var.NIX_DEV_SHELL]
+variable = "NIX_DEV_SHELL"
+format = '[ $env_value](bold fg:#cdd6f4)'
+
+[package]
+disabled = true

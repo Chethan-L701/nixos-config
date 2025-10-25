@@ -1,9 +1,28 @@
 {
   pkgs,
   inputs,
+  lib,
   ...
 }:
+let
+  configFiles = [
+    "starship.toml"
+  ];
 
+  configDirs = [
+    "niri"
+    "hypr"
+    "waybar"
+    "tofi"
+    "wofi"
+    "tmux"
+    "swaync"
+    "kitty"
+    "ghostty"
+    "nvim"
+    "yazi"
+  ];
+in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -11,71 +30,72 @@
   home.homeDirectory = "/home/chethan";
 
   imports = [
-    ./configs/neovim
-    ./configs/tmux
-    ./configs/hypr
-    ./configs/kitty
-    ./configs/ghostty
-    ./configs/swaync
-    ./configs/tofi
-    ./configs/wofi
-    ./configs/omp
+    ./configs/nvim
     ./configs/nushell
     ./configs/spicetify
     ./scripts
     inputs.catppuccin.homeModules.catppuccin
     inputs.zen-browser.homeModules.beta
   ];
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
+
   home.stateVersion = "24.11"; # Please read the comment before changing.
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
   home.packages = [
     inputs.listwindows.packages.${pkgs.system}.default
     inputs.kanata-client.packages.${pkgs.system}.default
   ];
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
-  home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
+  home.file = { };
 
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-  };
+  home.activation.linkConfigs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    echo "Linking the configs from /etc/nixos/configs/ to $HOME/.config"
 
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. These will be explicitly sourced when using a
-  # shell provided by Home Manager. If you don't want to manage your shell
-  # through Home Manager then you have to manually source 'hm-session-vars.sh'
-  # located at either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/chethan/etc/profile.d/hm-session-vars.sh
+    for dir in ${lib.concatStringsSep " " configDirs}; do
+
+        if [ -z $dir ] || [ $dir == "." ] || [ $dir == ".." ]; then
+            continue
+        fi
+
+        src="/etc/nixos/configs/$dir" 
+        dest="$HOME/.config/$dir"
+
+        if [ ! -d "$src" ]; then
+            echo "could not find the config for $dir in /etc/nixos/configs, skipping"
+            continue
+        fi
+       
+        echo "Linking $src to $dest"
+        rm -rf "$dest"
+        ln -sfT "$src" "$dest"
+        echo "successfully linked $src to dest"
+    done
+
+    for file in ${lib.concatStringsSep " " configFiles}; do
+
+        if [ -z $file ] || [ $file == "." ] || [ $file == ".." ]; then
+            continue
+        fi
+
+        src="/etc/nixos/configs/$file" 
+        dest="$HOME/.config/$file"
+
+        if [ ! -f "$src" ]; then
+            echo "could not find the config for $file in /etc/nixos/configs, skipping"
+            continue
+        fi
+       
+        echo "Linking $src to $dest"
+        rm -f "$dest"
+        ln -sfT "$src" "$dest"
+        echo "successfully linked $src to $dest"
+    done
+
+  '';
 
   home.sessionVariables = {
     EDITOR = "nvim";
     MANPAGER = "nvim +Man!";
   };
+
   gtk = {
     enable = true;
     cursorTheme = {
@@ -83,6 +103,7 @@
       package = pkgs.catppuccin-cursors.mochaDark;
     };
   };
+
   catppuccin.gtk = {
     icon = {
       accent = "mauve";
@@ -90,6 +111,7 @@
       flavor = "mocha";
     };
   };
+
   home.pointerCursor = {
     gtk.enable = true;
     x11.enable = true;
@@ -98,6 +120,7 @@
     size = 24;
   };
   programs.zen-browser.enable = true;
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 

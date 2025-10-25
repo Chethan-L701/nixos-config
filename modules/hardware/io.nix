@@ -33,7 +33,7 @@
     enable = true;
     keyboards = {
       all = {
-        configFile = /home/chethan/.config/kanata/kanata.kbd;
+        configFile = ../../configs/kanata.kbd;
         port = 6969;
       };
     };
