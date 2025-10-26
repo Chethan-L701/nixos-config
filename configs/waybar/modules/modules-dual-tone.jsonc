@@ -75,7 +75,6 @@
         "format": "{}",
         "separate-outputs": true,
         "rewrite": {
-            "(.*)${USER}@${set_sysname}:(.*)": "$1  :$2",
             "(.*) — Mozilla Firefox": "$1 󰈹",
             "(.*)Mozilla Firefox": "$1 Firefox 󰈹",
             "(.*) - Visual Studio Code": "$1 󰨞",
@@ -94,21 +93,6 @@
         "format": " {}",
         "format-uk": "Uk",
         "format-en": "US"
-    },
-    "hyprland/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": true,
-        "on-click": "activate",
-        "on-scroll-up": "hyprctl dispatch workspace e-1",
-        "on-scroll-down": "hyprctl dispatch workspace e+1",
-        "format-icons": {
-            //  "default": ""
-        },
-        "persistent-workspaces": {
-            "1": [],
-            "2": [],
-            "3": []
-        }
     },
     "custom/cpu-icon": {
         "format": " ",
