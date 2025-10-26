@@ -57,7 +57,6 @@
       # ides and editors
       godot # Game development software
       zed-editor # minimal gui editor
-      vscode # code editor by microsoft
 
       # social
       thunderbird # Email client

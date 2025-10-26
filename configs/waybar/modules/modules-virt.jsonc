@@ -199,8 +199,8 @@
         "on-click-middle": "playerctl previous",
         "on-click-right": "playerctl next",
         "scroll-step": 5.0,
-        "on-scroll-up": "~/.config/waybar/scripts/volumecontrol.sh --inc",
-        "on-scroll-down": "~/.config/waybar/scripts/volumecontrol.sh --dec",
+        "on-scroll-up": "~/.config/waybar/scripts/volumecontrol.sh --dec",
+        "on-scroll-down": "~/.config/waybar/scripts/volumecontrol.sh --inc",
         "smooth-scrolling-threshold": 1,
         "player-icons": {
             "chromium": "",

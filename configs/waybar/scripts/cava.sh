@@ -3,6 +3,13 @@
 bar="▁▂▃▄▅▆▇█"
 dict="s/;//g;"
 
+playerctl status > /dev/null 2>&1
+playerctl_status=$?
+if [ $playerctl_status -ne 0 ]; then
+    echo '{"text" : "", "class" : "hidden"}'
+    exit 0
+fi
+
 # creating "dictionary" to replace char with bar
 i=0
 while [ $i -lt ${#bar} ]
@@ -13,9 +20,10 @@ done
 
 # write cava config
 config_file="/tmp/waybarbar_cava_config"
-echo "
+printf "
 [general]
-bars = 26
+mode = normal
+bars = 20
 
 [input]
 method = pulse
@@ -27,7 +35,9 @@ raw_target = /dev/stdout
 data_format = ascii
 ascii_max_range = 7
 
-gradient = 2
+[color]
+gradient = 1
+gradient_count = 2
 gradient_color_1 = '#694dde'
 gradient_color_2 = '#e64565'
 
@@ -35,5 +45,6 @@ gradient_color_2 = '#e64565'
 
 # read stdout from cava
 cava -p $config_file | while read -r line; do
-    echo $line | sed $dict
+current_bar=$(echo $line | sed $dict)
+echo "{\"text\" : \"$current_bar\", "class" : "cava" }"
 done

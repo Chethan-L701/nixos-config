@@ -9,9 +9,22 @@
         },
         "modules": [
             "custom/power",
+            "custom/suspend",
+            "custom/hibernate",
+            "custom/reboot",
+        ]
+    },
+
+    "group/lock": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 300,
+            "children-class": "not-memory",
+            "transition-left-to-right": false
+        },
+        "modules": [
             "custom/lock",
             "custom/logout",
-            "custom/reboot"
         ]
     },
     // only for dual-tone-top theme.

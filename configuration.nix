@@ -34,7 +34,5 @@
     ./modules/locales.nix
     ./modules/fixes.nix
     ./modules/variables.nix
-
-    ./modules/services/vicinae.nix
   ];
 }

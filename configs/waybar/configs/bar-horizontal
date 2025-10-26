@@ -2,7 +2,8 @@
     "include": [
         "$HOME/.config/waybar/modules/modules-virt.jsonc",
         "$HOME/.config/waybar/modules/modules-custom.jsonc",
-        "$HOME/.config/waybar/modules/modules-groups.jsonc"
+        "$HOME/.config/waybar/modules/modules-groups.jsonc",
+        "$HOME/.config/waybar/modules/modules-dual-tone.jsonc"
     ],
     "layer": "top",
     "position": "top",
@@ -21,7 +22,9 @@
     ],
     "modules-right": [
         "mpris",
+        "custom/cava",
         "tray",
+        "group/system"
     ],
     "network#speed": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface

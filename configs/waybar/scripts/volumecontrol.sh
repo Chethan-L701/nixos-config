@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 iDIR="$HOME/.config/hypr/icons/vol"
 
@@ -42,36 +42,23 @@ notify_user() {
 
 # Increase Volume
 inc_volume() {
-    if [ "$(pamixer --get-mute)" == "true" ]; then
-        pamixer -u && notify_user
-    fi
-    pamixer -i 5 && notify_user
+    wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
 }
 
 # Decrease Volume
 dec_volume() {
-    if [ "$(pamixer --get-mute)" == "true" ]; then
-        pamixer -u && notify_user
-    fi
-    pamixer -d 5 && notify_user
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 }
+
 
 # Toggle Mute
 toggle_mute() {
-    if [ "$(pamixer --get-mute)" == "false" ]; then
-        pamixer -m && notify-send -a -h -i "$iDIR/muted-speaker.svg" "Volume Switched OFF"
-    elif [ "$(pamixer --get-mute)" == "true" ]; then
-        pamixer -u && notify-send -a -h -i "$iDIR/unmuted-speaker.svg" "Volume Switched ON"
-    fi
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 }
 
 # Toggle Mic
 toggle_mic() {
-    if [ "$(pamixer --default-source --get-mute)" == "false" ]; then
-        pamixer --default-source -m && notify-send -e -u low -i "$iDIR/muted-mic.svg" "Microphone Switched OFF"
-    elif [ "$(pamixer --default-source --get-mute)" == "true" ]; then
-        pamixer --default-source -u && notify-send -e -u low -i "$iDIR/unmuted-mic.svg" "Microphone Switched ON"
-    fi
+    wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 }
 
 # Get Mic Icon

@@ -32,6 +32,17 @@ window#waybar {
 
 #custom-cava {
     color: @rosewater;
+    padding-bottom: 4px;
+    padding-right : 14px;
+    font-size: 14px;
+}
+
+#custom-cava.hidden {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
 }
 
 tooltip {
@@ -81,10 +92,6 @@ tooltip label {
 
 #custom-overview,
 #custom-lock_screen,
-#custom-power,
-#custom-reboot,
-#custom-logout,
-#custom-lock,
 #custom-weather,
 #idle_inhibitor,
 #clock,
@@ -163,7 +170,7 @@ Modules Left
 
 #mpris {
     background-color: transparent;
-    font-size: 14;
+    font-size: 14px;
     color: @rosewater;
     padding-right: 20px;
 }
@@ -177,7 +184,7 @@ Modules Left
 
 #idle_inhibitor {
     font-size: 15px;
-    padding: 5px 0;
+    padding: 5px 0px;
     background: transparent;
     color: @pink;
     border-radius: 15px 0 0 15px;
@@ -291,15 +298,40 @@ Modules Left
     color: @peach;
 }
 
-#custom-reboot,
+#custom-lock {
+    padding-top : 10px;
+    padding-right : 5px;
+    padding-left : 5px;
+}
+#custom-power {
+    padding-top : 10px;
+    padding-bottom : 20px;
+    padding-right : 5px;
+    padding-left : 5px;
+}
+
 #custom-logout,
-#custom-lock,
+#custom-lock {
+    color: @green;
+    border-radius: 15px;
+    font-size: 15px;
+    font-weight: bolder;
+    padding-top : 10px;
+    padding-right : 5px;
+    padding-left : 5px;
+}
+
+#custom-reboot,
+#custom-suspend,
+#custom-hibernate,
 #custom-power {
     color: @red;
     border-radius: 15px;
     font-size: 15px;
     font-weight: bolder;
-    padding-left: 0px;
+    padding-top: 10px;
+    padding-right : 5px;
+    padding-left : 5px;
 }
 
 #custom-lock_screen {
@@ -307,14 +339,34 @@ Modules Left
     padding-right: 13px;
 }
 
-#custom-power {
-    padding-bottom: 20px;
-}
-
 #custom-dots {
     color: @sapphire;
     font-size: 15px;
 }
+
+#custom-system,
+#custom-cpu-icon,
+#custom-disk-icon,
+#custom-memory-icon {
+    font-size: 14px;
+    padding:0px 4px;
+    color: @teal;
+}
+
+#custom-system {
+    padding-right: 16px;
+    color: white;
+}
+
+#cpu,
+#memory,
+#disk {
+    font-size: 14px;
+    padding-right : 12px;
+    color: @green;
+}
+
+
 
 #custom-kanata {
     color: @teal;

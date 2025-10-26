@@ -1,7 +1,13 @@
 { ... }:
 {
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_IN";
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  i18n.extraLocales = [
+    "kn_IN/UTF-8"
+    "hi_IN/UTF-8"
+    "zh_CN.UTF-8/UTF-8"
+  ];
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_IN";
@@ -15,9 +21,4 @@
     LC_TIME = "en_IN";
   };
 
-  i18n.extraLocales = [
-    "kn_IN/UTF-8"
-    "hi_IN/UTF-8"
-    "zh_CN.UTF-8/UTF-8"
-  ];
 }

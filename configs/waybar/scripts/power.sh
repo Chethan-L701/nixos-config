@@ -10,6 +10,12 @@ case $1 in
     --logout)
         kitten quick-access-terminal -o edge=bottom -o lines=5 -- $HOME/.config/waybar/scripts/power-options.sh --logout
         ;;
+    --suspend)
+        kitten quick-access-terminal -o edge=bottom -o lines=5 -- $HOME/.config/waybar/scripts/power-options.sh --suspend
+        ;;
+    --hibernate)
+        kitten quick-access-terminal -o edge=bottom -o lines=5 -- $HOME/.config/waybar/scripts/power-options.sh --hibernate
+        ;;
     --lock)
         hyprlock
         ;;

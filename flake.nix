@@ -22,6 +22,7 @@
 
     listwindows.url = "github:Chethan-L701/listwindows";
     kanata-client.url = "github:Chethan-L701/kanata-client";
+    cava-waybar-module.url = "github:Chethan-L701/cava-waybar-module";
   };
 
   outputs =
@@ -47,7 +48,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
-            home-manager.users.chethan = import ./home.nix;
+            home-manager.users.chethan = import ./modules/homemanager/home.nix;
             # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
             home-manager.extraSpecialArgs = { inherit inputs; };
           }

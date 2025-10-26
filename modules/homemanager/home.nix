@@ -30,11 +30,11 @@ in
   home.homeDirectory = "/home/chethan";
 
   imports = [
-    ./configs/nvim
-    ./configs/nushell
-    ./configs/spicetify
-    ./scripts
+    ./nvim.nix
+    ./nushell.nix
+    ./spicetify.nix
     inputs.catppuccin.homeModules.catppuccin
+    inputs.vicinae.homeManagerModules.default
     inputs.zen-browser.homeModules.beta
   ];
 
@@ -42,6 +42,7 @@ in
   home.packages = [
     inputs.listwindows.packages.${pkgs.system}.default
     inputs.kanata-client.packages.${pkgs.system}.default
+    inputs.cava-waybar-module.packages.${pkgs.system}.default
   ];
 
   home.file = { };
@@ -120,6 +121,22 @@ in
     size = 24;
   };
   programs.zen-browser.enable = true;
+
+  services.vicinae = {
+    enable = true;
+    autoStart = true;
+    settings = {
+      faviconService = "twenty";
+      theme.name = "catppuccin-mocha";
+      font.size = 12;
+      rootSearch.searchFiles = true;
+      popToRootOnClose = true;
+      window = {
+        csd = true;
+        opacity = 0.90;
+      };
+    };
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

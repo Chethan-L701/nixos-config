@@ -1,10 +1,7 @@
 {
-    //_________\\ Custom Modules //_________\\
     // rofi app launcher
     "custom/launch_rofi": {
         "format": "", // for arch
-        // "format": "󰣛",   // for fedora
-        // "format": "",  // for opensuse
         "on-click": "rofi -show drun -theme ~/.config/rofi/menu/menu.rasi || killall rofi",
         "on-click-right": "kitty --title yazi -e yazi",
         "tooltip": true,
@@ -37,19 +34,11 @@
         "on-click-right": "swaync-client -d -sw",
         "escape": true,
     },
-    // System updater ( works for arch, fedora and opensuse also. )
-    "custom/updater": {
-        "exec": "~/.config/waybar/scripts/systemupdate.sh --check",
-        "return-type": "json",
-        "format": " {}",
-        // "format": " {}", // for arch linux only
-        "on-click": "~/.config/waybar/scripts/systemupdate.sh --update",
-        "interval": 86400,
-        "tooltip": true
-    },
     // waybar cava ( haven't add in the waybar )
     "custom/cava": {
-        "exec": "~/.config/waybar/scripts/cava.sh",
+        "exec": "cava-waybar-module",
+        "return-type": "json",
+        "format" : "{}",
         "framerate": 60
     },
     // clipboard manager
@@ -97,9 +86,24 @@
     },
     // system info expand
     "custom/system": {
-        "format": "",
+        "format": " ",
+        "tooltip": "System Info",
         "tooltip-format": "system info\n\nLeft-click to check system info"
     },
+
+    "custom/mpris-next": {
+        "format": "󰙡 ",
+        "tooltip": "Next",
+        "tooltip-format": "system info\n\nLeft-click to check system info",
+        "on-click" : "playerctl next"
+    },
+    "custom/mpris-next": {
+        "format": "󰙡 ",
+        "tooltip": "Next",
+        "tooltip-format": "system info\n\nLeft-click to check system info",
+        "on-click" : "playerctl next"
+    },
+
     // power section expand
     "custom/power": {
         "format": "",
@@ -110,6 +114,16 @@
         "format": "",
         "tooltip-format": "Reboot",
         "on-click": "~/.config/waybar/scripts/power.sh --reboot"
+    },
+    "custom/suspend": {
+        "format": "󰤄",
+        "tooltip-format": "Suspend",
+        "on-click": "~/.config/waybar/scripts/power.sh --suspend"
+    },
+    "custom/hibernate": {
+        "format": "",
+        "tooltip-format": "Hibernate",
+        "on-click": "~/.config/waybar/scripts/power.sh --Hibernate"
     },
     "custom/kanata": {
         "exec": "kanata-client --host 0.0.0.0 --port 6969",
