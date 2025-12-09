@@ -20,6 +20,7 @@ let
     "kitty"
     "ghostty"
     "nvim"
+    "nvim-old"
     "yazi"
   ];
 in
@@ -28,21 +29,25 @@ in
   # manage.
   home.username = "chethan";
   home.homeDirectory = "/home/chethan";
+  home.enableNixpkgsReleaseCheck = false;
 
   imports = [
-    ./nvim.nix
-    ./nushell.nix
-    ./spicetify.nix
     inputs.catppuccin.homeModules.catppuccin
     inputs.vicinae.homeManagerModules.default
     inputs.zen-browser.homeModules.beta
+    inputs.caelestia-shell.homeManagerModules.default
+    ./nvim.nix
+    ./nushell.nix
+    ./spicetify.nix
+    ./caelestia.nix
+    ./desktop-entries.nix
   ];
 
   home.stateVersion = "24.11"; # Please read the comment before changing.
   home.packages = [
-    inputs.listwindows.packages.${pkgs.system}.default
-    inputs.kanata-client.packages.${pkgs.system}.default
-    inputs.cava-waybar-module.packages.${pkgs.system}.default
+    inputs.listwindows.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.kanata-client.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.cava-waybar-module.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   home.file = { };
@@ -103,12 +108,16 @@ in
       name = "catppuccin-mocha-dark-cursors";
       package = pkgs.catppuccin-cursors.mochaDark;
     };
+    iconTheme = {
+      name = "candy-icons";
+      package = pkgs.candy-icons;
+    };
   };
 
   catppuccin.gtk = {
     icon = {
+      enable = false;
       accent = "mauve";
-      enable = true;
       flavor = "mocha";
     };
   };

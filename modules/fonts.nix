@@ -16,7 +16,7 @@
       material-symbols
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       nerd-fonts.fira-code
       nerd-fonts.jetbrains-mono
       nerd-fonts.mononoki

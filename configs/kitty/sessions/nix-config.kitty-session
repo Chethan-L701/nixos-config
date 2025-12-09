@@ -1,0 +1,3 @@
+layout grid
+cd /etc/nixos/
+launch --title "Edit Nix Configs" -- /run/current-system/sw/bin/sudo -E /etc/profiles/per-user/chethan/bin/nvim

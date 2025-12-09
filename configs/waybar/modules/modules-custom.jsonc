@@ -38,6 +38,7 @@
     "custom/cava": {
         "exec": "cava-waybar-module",
         "return-type": "json",
+        "on-click" : "kitty --app-id cava -e cava",
         "format" : "{}",
         "framerate": 60
     },

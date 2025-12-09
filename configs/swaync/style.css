@@ -120,19 +120,22 @@ blankwindow {
     border: 0;
     padding: 16px;
     transition: var(--hover-tranistion);
-    background: @base;
+    background: @crust;
 }
 
 .notification-row .notification-background .notification.low {
     /* Low Priority Notification */
+    border: 4px solid @blue;
 }
 
 .notification-row .notification-background .notification.normal {
     /* Normal Priority Notification */
+    border: 4px solid @mauve;
 }
 
 .notification-row .notification-background .notification.critical {
     /* Critical Priority Notification */
+    border: 4px solid @red;
 }
 
 .notification-row .notification-background .notification .notification-default-action {
@@ -144,7 +147,7 @@ blankwindow {
     border: none;
     color: var(--text-color);
     transition: var(--hover-tranistion);
-    border-radius: 0px;
+    border-radius: 4px;
 }
 
 .notification-row .notification-background .notification .notification-default-action:hover {

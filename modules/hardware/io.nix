@@ -10,16 +10,6 @@
     disableWhileTyping = false;
   };
 
-  # sleep settings
-  services.logind = {
-    settings = {
-      Login = {
-        HandleLidSwitch = "ignore";
-        HandleLidSwitchExternalPower = "ignore";
-      };
-    };
-  };
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -31,12 +21,20 @@
 
   services.kanata = {
     enable = true;
+    package = pkgs.kanata-with-cmd;
     keyboards = {
       all = {
         configFile = ../../configs/kanata.kbd;
         port = 6969;
       };
     };
+  };
+  systemd.services.kanata = {
+    wantedBy = [ "multi-user.target" ];
+    before = [
+      "sddm.service"
+      "display-manager.service"
+    ];
   };
 
   environment.systemPackages = with pkgs; [
@@ -54,8 +52,10 @@
     vnstat # network monitoring tool
     ncdu # storage analysis tool
     htop # better top (task manager)
+    btop # fancy htop
 
     # keyboard and inputs
     kanata-with-cmd
+    whisper-cpp-vulkan
   ];
 }

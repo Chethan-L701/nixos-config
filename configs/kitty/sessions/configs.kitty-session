@@ -1,0 +1,3 @@
+layout tall
+cd /etc/nixos/configs
+launch --title "Edits Configs" /etc/profiles/per-user/chethan/bin/nvim

@@ -7,6 +7,7 @@ return {
         "hrsh7th/cmp-cmdline",
         "hrsh7th/cmp-nvim-lsp-signature-help",
         "ray-x/cmp-treesitter",
+        "L3MON4D3/LuaSnip",
     },
     config = function()
         local cmp = require("cmp")
@@ -178,12 +179,13 @@ return {
             "rust_analyzer",
             "lua_ls",
             "ols",
-            "zls"
+            "zls",
         }
         local handler = {
-            ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {}),
+            ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
             ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {}),
         }
+
 
         local lspconfig = require("lspconfig")
         for _, lsp in ipairs(servers) do
@@ -197,5 +199,6 @@ return {
                 end,
             })
         end
+        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
     end,
 }

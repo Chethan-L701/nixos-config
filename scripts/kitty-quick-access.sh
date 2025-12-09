@@ -1,3 +1,4 @@
+source ~/.cache/wal/colors.sh
 options="htop\nyazi\nbluetui\nopen-file\nwallpapers\ntmux-sessions\nswitch-windows\nplayerctl"
 
 selection=$(printf $options | fzf)
@@ -18,18 +19,15 @@ elif [ "$selection" == "open-file" ]; then
 
     file=$(fd -u -t f | fzf)
     if [ -n "$file" ]; then
-        nvim $file
+        if [ "$DESKTOP_SESSION" == "niri" ]; then
+            niri msg action spawn -- xdg-open $file
+        elif [ "$DESKTOP_SESSION" == "hyprland-uwsm" ]; then
+            hyprctl dispatch exec -- xdg-open $file 
+        fi
     fi
 
 elif [ "$selection" == "wallpapers" ]; then
-
-    wallpaper_dir="/etc/nixos/wallpapers"
-    wallpaper_sel=$(cd $wallpaper_dir && \
-        fd -t f -e jpg -e png -e jpeg |fzf \
-            --preview='kitten icat --clear --transfer-mode=memory --place=80x40@95x0 --align center --stdin=no {} > /dev/tty' \
-            --preview-window "right,50%,border-left")
-    swww img --transition-type wave "$wallpaper_dir/$wallpaper_sel"
-
+    /etc/nixos/scripts/set-wallpaper.sh
 elif [ "$selection" == "tmux-sessions" ]; then
 
     tmux_session=$(tmux ls | fzf --prompt "select the tmux session to start...")

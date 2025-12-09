@@ -5,6 +5,8 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  # nixpkgs.config.allowBroken = true;
+  nixpkgs.config.cudaSupport = true;
 
   # Set your time zone.
   time.timeZone = "Asia/Kolkata";

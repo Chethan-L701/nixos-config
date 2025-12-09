@@ -1,7 +1,10 @@
 { pkgs, ... }:
 {
   programs.fish.enable = true;
-  programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+    package = pkgs.firefox-bin;
+  };
   programs.kdeconnect.enable = true;
   programs.dconf.enable = true;
   programs.mtr.enable = true;
@@ -20,7 +23,12 @@
   virtualisation.waydroid.enable = true;
 
   environment.systemPackages = with pkgs; [
+    # C / C++
+    clang-tools
     gcc
+
+    # Rust
+    rustup
 
     #editors
     vim # vim
@@ -30,10 +38,10 @@
     kitty # terminal emulator fallback
 
     # nvim and wez
-    lua51Packages.lua                                   # lua language interpreter
-    luajitPackages.luarocks-nix                         # luarocks : package manager for lua
-    luajitPackages.jsregexp                             # lua package to create and parse JSON
-    luajitPackages.magick                               # lua package for libmagick ( images )
+    lua51Packages.lua # lua language interpreter
+    luajitPackages.luarocks-nix # luarocks : package manager for lua
+    luajitPackages.jsregexp # lua package to create and parse JSON
+    luajitPackages.magick # lua package for libmagick ( images )
 
     #other tools
     tesseract # ocr tool

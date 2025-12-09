@@ -38,5 +38,6 @@
     rofi # OG rofi fork for wayland
     cava # Audia visualizer
     wl-clipboard # clipboard for wayland
+    eww # widget system
   ];
 }

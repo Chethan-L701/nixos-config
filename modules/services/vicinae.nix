@@ -10,7 +10,9 @@
 
     serviceConfig = {
       Environment = "PATH=/run/current-system/sw/bin:/etc/profiles/per-user/chethan/bin:/var/lib/flatpak/exports/bin";
-      ExecStart = "${inputs.vicinae.packages.${pkgs.system}.default}/bin/vicinae server";
+      ExecStart = "${
+        inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default
+      }/bin/vicinae server";
       Restart = "always";
       RestartSec = 5;
       KillMode = "process";

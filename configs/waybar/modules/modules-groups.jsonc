@@ -38,12 +38,14 @@
         },
         "modules": [
             "custom/system",
+            "network",
+            "battery",
             "custom/cpu-icon",
             "cpu",
             "custom/memory-icon",
             "memory",
             "custom/disk-icon",
-            "disk"
+            "disk",
         ]
     },
     // system info universal

@@ -25,12 +25,42 @@
 
 
 (deflayer default
+ esc            f1            f2           f3            f4           f5            f6            f7           f8           f9           f10          f11          f12
+ grv            1             2            3             4            5             6             7            8            9            0            -            =    bspc
+ tab            q             w            e             r            t             y             u            i            o            p            [            ]    \
+ @ltsymbc       a             s            d             f            g             h             j            k            l            ;            '            ret
+ lsft           z             x            c             v            b             n             m            ,            .            /            ▲            rsft
+ lctl                         lalt         lmet          spc                                                   rmet         ralt         ◀            ▼            ▶
+ )
+
+
+
+(deflayer term
+  esc           f1           f2           f3           f4             f5           f6           f7           f8               f9           f10          f11          f12
+  grv           1            2            3            @lssymb        5            6            7            8                9            0            -            =    bspc
+  tab           q            w            e            r              t            y            u            i                o            p            [            ]    \
+  caps          @lsapps      s            d            f              g            h            j            k                l            ;            '            ret
+  lsft          z            x            c            v              b            n            m            ,                .            /            ▲            rsft
+  lctl                       lalt         lmet         @lsdefault                                            rmet             ralt         ◀            ▼            ▶
+)
+
+
+(deflayer apps
+ esc            f1            f2           f3            f4           f5            f6            f7           f8           f9           f10          f11          f12
+ grv            1             2            3             4            5             6             7            8            9            0            -            =    bspc
+ tab            q             @appwhats    @appexp       r            XX            @appyt        u            @appinks     @appobs      @apppavu     [            ]    \
+ @ltsymbc       a             @appsteam    @appdis       XX           @appgimp      @apphtop      j            @appkden     @applutr     ;            '            ret
+ lsft           @appzath      @appexcal    c             @appvici     b             @appobn       @appmusic    ,            .            /            ▲            rsft
+ lctl                         lalt         lmet          @lsdefault                                            rmet         ralt         ◀            ▼            ▶
+ )
+
+(deflayer navi
   esc       f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   grv       1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab       q    w    e    r    t    y    u    i    o    p    [    ]    \
-  @ltsymbc  a    s    d    f    g    h    j    k    l    ;    '    ret
+  @ltsymbc  a    s    d    f    g    ◀    ▼    ▲    ▶    ;    '    ret
   lsft      z    x    c    v    b    n    m    ,    .    /    ▲    rsft
-  lctl           lalt lmet      spc            rmet ralt ◀    ▼    ▶
+  lctl           lalt lmet     @lsdefault      rmet ralt ◀    ▼    ▶
 )
 
 (deflayer symb
@@ -42,11 +72,44 @@
   lctl        lalt lmet         spc         rmet ralt ◀    ▼    ▶
 )
 
-;;command
+;;commands
 
+(defalias 
+    appwhats                (cmd bash -c "echo 'TODO: Whatsapp'")
+    appexp                  (cmd sudo -u chethan nautilus)
+    appyt                   (cmd bash -c "echo 'TODO : youtube'")
+    appinks                 (cmd sudo -u chethan -- inkscape)
+    appobs                  (cmd sudo -u chethan obs)
+    apppavu                 (cmd sudo -u chethan -- pavucontrol)
+    appsteam                (cmd sudo -u chethan steam)
+    appdis                  (cmd sudo -u chethan discord)
+    appgimp                 (cmd sudo -u chethan gimp)
+    apphtop                 (cmd sudo -u chethan -- kitty -e 'htop')
+    appkden                 (cmd sudo -u chethan kdenlive)
+    applutr                 (cmd lutris)
+    appzath                 (cmd sudo -u chethan zathura)
+    appexcal                (cmd bash -c "echo 'TODO: Excalidraw'")
+    appvici                 (cmd vicinae toggle)
+    appobn                  (cmd sudo -u chethan obsidian)
+    appmusic                (cmd sudo -u chethan g4music)
+)
 
-;; key aliases
+;; toggle aliases
 
 (defalias 
   ltsymbc (tap-hold 50 50 caps (layer-toggle symb))
+)
+
+;; switch aliases
+
+(defalias
+   lsnavi (layer-switch navi)
+   lsdefault (layer-switch default)
+   lssymb (layer-switch symb)
+   lsterm (layer-switch term)
+   lsapps (layer-switch apps)
+)
+
+(defchordsv2
+    (lmet tab) @lsterm 50 all-released ()
 )

@@ -26,12 +26,9 @@
         "backlight",
         "pulseaudio/slider",
         "pulseaudio",
-        "network",
-        "idle_inhibitor",
-        "battery",
-        "custom/kanata",
         "clock",
         "custom/notify",
+        "custom/kanata",
         "group/lock",
         "group/power"
     ],

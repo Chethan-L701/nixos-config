@@ -106,6 +106,10 @@ output "eDP-1" {
 
 }
 
+cursor {
+    hide-after-inactive-ms 5000  // Hides the cursor after 1000 milliseconds (1 second) of inactivity
+}
+
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
@@ -196,14 +200,13 @@ layout {
         // off
 
         width 4
-        // active-color "#ffc87f"
-        inactive-color "#2e2e3e"
+        active-color "#2e2e3e"
+        inactive-color "#1e1e2e"
 
         // Color of the border around windows that request your attention.
         urgent-color "#9b0000"
 
-        // active-gradient from="#7777cc" to="#cc7777" angle=135 relative-to="workspace-view"
-        active-gradient from="#6e6e9e" to="#2e2e3e" angle=135 relative-to="workspace-view"
+        // active-gradient from="#6e6e9e" to="#2e2e3e" angle=135 relative-to="workspace-view"
         // inactive-gradient from="#1e1e2e" to="#2e2e3e" angle=45 relative-to="workspace-view"
     }
 
@@ -322,6 +325,14 @@ window-rule {
 }
 
 window-rule {
+    match title="^Picture in picture$"
+    open-floating true
+    default-floating-position x=10 y=10 relative-to="bottom-right"
+    default-column-width { proportion 0.33; }
+    default-window-height { fixed 360; }
+}
+
+window-rule {
     match app-id=r#"zen-beta$"# title="^Picture-in-Picture$"
     open-floating true
     default-floating-position x=10 y=10 relative-to="bottom-right"
@@ -351,6 +362,23 @@ window-rule {
     match app-id=r#"kew"#
     open-floating false
     default-column-width { proportion 0.50; }
+}
+
+window-rule {
+    match app-id=r#"g4music"#
+    open-floating true
+    default-window-height { proportion 0.6; }
+    default-column-width { proportion 0.25; }
+    default-floating-position x=50 y=50 relative-to="bottom-right"
+
+}
+
+window-rule {
+    match app-id=r#"com.network.manager"#
+    open-floating true
+    default-window-height { fixed 600; }
+    default-column-width { fixed 480; }
+    default-floating-position x=10 y=10 relative-to="bottom-left"
 }
 
 // Example: block out two password managers from screen capture.
@@ -400,23 +428,13 @@ binds {
     Mod+return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
     Mod+Ctrl+Space hotkey-overlay-title="Restart vicinae service" { spawn "systemctl" "--user" "restart" "vicinae.service"; }
     Mod+Space hotkey-overlay-title="Run an Application: vicinae" { spawn "vicinae" "toggle"; }
+    Mod+D hotkey-overlay-title="Run an Application: tofi" { spawn "/etc/nixos/scripts/tofi-menu.sh"; }
     Mod+W hotkey-overlay-title="Select a window to focus" { spawn  "vicinae" "vicinae://extensions/vicinae/wm/switch-windows"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
     // Mod+T { spawn "bash" "-c" "notify-send hello && exec alacritty"; }
-
-    // Example volume keys mappings for PipeWire & WirePlumber.
-    // The allow-when-locked=true property makes them work even when the session is locked.
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "-l" "1.5" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
-    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
-
-    // brightness control
-    XF86MonBrightnessUp  allow-when-locked=true { spawn "brightnessctl" "s" "+5%"; }
-    XF86MonBrightnessDown  allow-when-locked=true { spawn "brightnessctl" "s" "5%-"; }
 
     // Media Player Control
     XF86AudioPlay allow-when-locked=true { spawn "playerctl" "play-pause"; } 
@@ -581,9 +599,9 @@ binds {
     Mod+BracketRight { consume-or-expel-window-right; }
 
     // Consume one window from the right to the bottom of the focused column.
-    Mod+Comma  { consume-window-into-column; }
+    // Mod+Comma  { consume-window-into-column; }
     // Expel the bottom window from the focused column to the right.
-    Mod+Period { expel-window-from-column; }
+    // Mod+Period { expel-window-from-column; }
 
     Mod+R { switch-preset-column-width; }
     Mod+Shift+R { switch-preset-window-height; }
@@ -633,8 +651,8 @@ binds {
     // Mod+Shift+Space { switch-layout "prev"; }
 
     Print { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    Shift+Print { screenshot-window; }
+    Mod+Print { screenshot-screen; }
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here
@@ -654,8 +672,12 @@ binds {
     Mod+N { spawn "swaync-client" "-t" "-sw"; }
     Mod+Alt+K { spawn "kitten" "quick-access-terminal" "-o" "edge=bottom" "--" "/etc/nixos/scripts/kitty-quick-access.sh"; }
     Alt+V { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }
+    Mod+Period { spawn "vicinae" "vicinae://extensions/mmazzarolo@raycast/unicode-symbols/index"; }
+    Mod+Comma { spawn "vicinae" "vicinae://extensions/FezVrasta/emoji/emoji"; }
     Mod+T { spawn "/etc/nixos/scripts/toggle-top-waybar.sh"; }
     Mod+Shift+T { spawn "ocr-select"; }
-    Mod+M { spawn "kitty" "--app-id" "kew" "-e" "kew";}
+    Mod+M { spawn "/etc/nixos/scripts/g4music.sh"; }
     Mod+semicolon { spawn "kitten" "quick-access-terminal" "-o" "edge=bottom" "--" "nvim" "/home/chethan/scratch.md"; }
+    Mod+Ctrl+O { spawn "obs"; }
+    Mod+Alt+C { spawn "kitty" "--session" "~/.config/kitty/sessions/configs.kitty-session"; }
 }

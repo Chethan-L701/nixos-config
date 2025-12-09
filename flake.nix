@@ -20,6 +20,11 @@
     vicinae.url = "github:vicinaehq/vicinae";
     catppuccin.url = "github:catppuccin/nix";
 
+    caelestia-shell = {
+      url = "github:caelestia-dots/shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     listwindows.url = "github:Chethan-L701/listwindows";
     kanata-client.url = "github:Chethan-L701/kanata-client";
     cava-waybar-module.url = "github:Chethan-L701/cava-waybar-module";

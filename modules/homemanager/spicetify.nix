@@ -3,11 +3,13 @@
   inputs,
   config,
   ...
-}: let
-  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
-in {
+}:
+let
+  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in
+{
   # import the flake's module
-  imports = [inputs.spicetify-nix.homeManagerModules.default];
+  imports = [ inputs.spicetify-nix.homeManagerModules.default ];
 
   # configure spicetify :)
   programs.spicetify = rec {

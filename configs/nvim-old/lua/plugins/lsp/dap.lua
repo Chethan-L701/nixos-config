@@ -15,51 +15,52 @@ return {
         config = function()
             local dap = require("dap")
 
-            dap.adapters.cppdbg = {
-                id = "cppdbg",
+            dap.adapters.gdb = {
                 type = "executable",
-                command = "/home/kali/.local/share/nvim/mason/bin/OpenDebugAD7",
+                command = "gdb",
+                args = { "--interpreter=dap", "--eval-command", "set print pretty on" }
             }
 
-            dap.configurations.cpp = {
+            dap.configurations.c = {
                 {
-                    name = "lauch (cppdbg)",
-                    type = "cppdbg",
+                    name = "Launch",
+                    type = "gdb",
                     request = "launch",
                     program = function()
-                        return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-                    end,
-                    cwd = "${workspaceFolder}",
-                    stopAtEntry = true,
-                },
-                {
-                    name = "lauch (gdb)",
-                    type = "cppdbg",
-                    request = "launch",
-                    MIMode = "gdb",
-                    miDebuggerPath = "/usr/bin/gdb",
-                    cwd = "${workspaceFolder}",
-                    program = function()
-                        return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-                    end,
-                },
-                {
-                    name = "lauch gdb with arguments",
-                    type = "cppdbg",
-                    request = "launch",
-                    MIMode = "gdb",
-                    miDebuggerPath = "/usr/bin/gdb",
-                    cwd = "${workspaceFolder}",
-                    program = function()
-                        return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+                        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
                     end,
                     args = function()
-                        local arg_str = vim.fn.input("Arguments: ")
-                        return vim.split(arg_str, " ")
+                        return vim.fn.input('Arguments to the program : ')
                     end,
+                    cwd = "${workspaceFolder}",
+                    stopAtBeginningOfMainSubprogram = false,
                 },
+                {
+                    name = "Select and attach to process",
+                    type = "gdb",
+                    request = "attach",
+                    program = function()
+                        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                    end,
+                    pid = function()
+                        local name = vim.fn.input('Executable name (filter): ')
+                        return require("dap.utils").pick_process({ filter = name })
+                    end,
+                    cwd = '${workspaceFolder}'
+                },
+                {
+                    name = 'Attach to gdbserver :1234',
+                    type = 'gdb',
+                    request = 'attach',
+                    target = 'localhost:1234',
+                    program = function()
+                        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                    end,
+                    cwd = '${workspaceFolder}'
+                }
             }
-            dap.configurations.c = dap.configurations.cpp
+
+            dap.configurations.cpp = dap.configurations.c
 
             -- nvim dap-ui
             require("dapui").setup({

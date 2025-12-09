@@ -1,41 +1,75 @@
-vim.g.mapleader = " "
+vim.keymap.set("n", "<leader>yy", '+yy', { desc = "copy the current line to the system clipboard" })
+vim.keymap.set({ "v", "n" }, "<leader>y", '"+y', { desc = "copy selection to the system clipboard" })
+vim.keymap.set("n", "<leader>p", '"+p', { desc = "paste from the system keyboard" })
 
 vim.keymap.set("n", "<C-s>", function()
-    vim.cmd("w")
-    local cmd = "mksession! " .. vim.fn.getcwd() .. "/session.vim"
-    vim.cmd(cmd)
-end, { silent = true, noremap = true })
+    vim.cmd [[:w]]
+end, { desc = "save the file in the current buffer" })
 
-vim.keymap.set("n", "<C-q>", ":QuitNvim<CR>", { desc = "Quit Nvim" })
-vim.keymap.set("n", "!", ":!", { desc = "Shell" })
-vim.keymap.set("n", "<Esc>", "<cmd>noh<CR>")
-vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "copy to system clipboard" })
-vim.keymap.set({ "n", "v" }, "<leader>yy", '0v$"+y$', { desc = "copy entire line to system clipboard" })
-vim.keymap.set({ "n", "v", "x" }, "<leader>li", function()
-    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-end, { desc = "toggle inlay hints" })
-vim.keymap.set("v", "<M-j>", ":m '>+1<CR>gv=gv") -- Shift visual selected line down
-vim.keymap.set("v", "<M-k>", ":m '<-2<CR>gv=gv") -- Shift visual selected line up
-vim.keymap.set({ "n", "t" }, "<M-l>", "<C-w>l")
-vim.keymap.set({ "n", "t" }, "<M-h>", "<C-w>h")
-vim.keymap.set({ "n", "t" }, "<M-j>", "<C-w>j")
-vim.keymap.set({ "n", "t" }, "<M-k>", "<C-w>k")
-vim.keymap.set("t", "<Esc>", "<C-\\>")
-vim.keymap.set("n", "<leader>|", "<cmd>vsplit<cr>", { desc = "vertical split" })
-vim.keymap.set("n", "<leader>-", "<cmd>split<cr>", { desc = "horizontal split" })
+vim.keymap.set("n", "<Esc>", function()
+    vim.cmd [[noh]]
+    return "<Esc>"
+end, { expr = true })
 
-vim.keymap.set("n", "<leader>cc", function()
-    vim.cmd([[ApplyColorscheme]])
-end, { desc = "apply color scheme" })
-vim.keymap.set({ "n", "v", "x" }, "<leader>hi", function()
-    require("core.highlights").set_highlights()
-end, { desc = "highlights" })
+vim.keymap.set("n", "<leader>fz", function()
+    Snacks.picker()
+end, { desc = "Snack picker full" })
 
-vim.keymap.set("n", "+", "<cmd>redo<cr>")
-vim.keymap.set("n", "-", "<cmd>undo<cr>")
+vim.keymap.set("n", "<leader>gr", function()
+    Snacks.picker.lsp_references()
+end, { desc = "snacks lsp references" })
 
-vim.keymap.set("n", "<leader>sg", function()
-    vim.cmd [[Lazy load sg.nvim]]
-end, { desc = "load the sourcegraph plugin and enable cody autocompletion" })
+vim.keymap.set("n", "<leader>|", function()
+    vim.cmd [[:vsplit]]
+end, { desc = "horizontal split" })
 
-vim.keymap.set({ "n", "i" }, "<C-]>", "<cmd>bnext<cr>", { desc = "rotate buffers forwards" })
+
+vim.keymap.set("n", "<leader>-", function()
+    vim.cmd [[:split]]
+end, { desc = "horizontal split" })
+
+diffview_open = false
+vim.keymap.set("n", "<leader>dv", function()
+    if diffview_open then
+        diffview_open = false
+        vim.cmd [[DiffviewClose]]
+    else
+        diffview_open = true
+        vim.cmd [[DiffviewOpen]]
+    end
+end, { desc = "Diffview Toggle" })
+
+---@param choice string
+local make_session = function(choice)
+    if choice == "c" or choice == "cancel" or choice == "no" then
+        vim.notify("disengaging quit")
+    elseif choice == "y" or choice == "yes" then
+        vim.cmd [[wa!]]
+        vim.cmd [[qa!]]
+    elseif choice == "d" or choice == "discard" then
+        vim.cmd [[qa!]]
+    else
+        vim.notify("selceted option: '" ..
+            choice ..
+            "' does not exist.\n" ..
+            [[Select one of the following:
+    c -> cancel the prompt
+    d -> discard the changes and quit
+    y -> save the changes and quit]]
+        )
+    end
+end
+
+vim.keymap.set("t", "<C-/>", function()
+    Snacks.terminal()
+end, { desc = "Toggle Snack terminal" })
+
+vim.keymap.set("n", "<C-q>", function()
+    Snacks.input.input({
+        prompt = "do you want to save and exit? y/c/d",
+        prompt_pos = "left"
+    }, make_session)
+end, { desc = "Save all and quit" })
+
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "focus left window" })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "focus right window" })

@@ -45,6 +45,9 @@ return {
     keys = {
         { "<leader>bn",  "<cmd>BufferLineCycleNext<cr>",       desc = "Next Buffer" },
         { "<leader>bp",  "<cmd>BufferLineCyclePrev<cr>",       desc = "Prev Buffer" },
+        { "<M-Tab>",     "<cmd>BufferLineCycleNext<cr>",       desc = "Next Buffer" },
+        { "<M-S-Tab>",   "<cmd>BufferLineCyclePrev<cr>",       desc = "Prev Buffer" },
+
         { "<leader>bd",  "<cmd>BufferLinePickClose<cr>",       desc = "Close Buffer" },
         { "<leader>bb",  "<cmd>BufferLinePick<cr>",            desc = "Pick Buffer" },
         { "<leader>bc",  "<cmd>BufferLinePickClose<cr>",       mode = "v",                desc = "Pick Buffer" },
@@ -62,6 +65,17 @@ return {
         { "<leader>b7",  "<cmd>BufferLineGoToBuffer 7<cr>",    desc = "Buffer 7" },
         { "<leader>b8",  "<cmd>BufferLineGoToBuffer 8<cr>",    desc = "Buffer 8" },
         { "<leader>b9",  "<cmd>BufferLineGoToBuffer 9<cr>",    desc = "Buffer 9" },
+
+        { "<M-1>",       "<cmd>BufferLineGoToBuffer 1<cr>",    desc = "Buffer 1" },
+        { "<M-2>",       "<cmd>BufferLineGoToBuffer 2<cr>",    desc = "Buffer 2" },
+        { "<M-3>",       "<cmd>BufferLineGoToBuffer 3<cr>",    desc = "Buffer 3" },
+        { "<M-4>",       "<cmd>BufferLineGoToBuffer 4<cr>",    desc = "Buffer 4" },
+        { "<M-5>",       "<cmd>BufferLineGoToBuffer 5<cr>",    desc = "Buffer 5" },
+        { "<M-6>",       "<cmd>BufferLineGoToBuffer 6<cr>",    desc = "Buffer 6" },
+        { "<M-7>",       "<cmd>BufferLineGoToBuffer 7<cr>",    desc = "Buffer 7" },
+        { "<M-8>",       "<cmd>BufferLineGoToBuffer 8<cr>",    desc = "Buffer 8" },
+        { "<M-9>",       "<cmd>BufferLineGoToBuffer 9<cr>",    desc = "Buffer 9" },
+
     },
     lazy = true,
 }

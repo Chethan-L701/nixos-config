@@ -32,5 +32,12 @@
     brightnessctl # control the screen brightness
     playerctl # media controls for next, prev , puase , play , etc.
     imagemagick # image manipulation tool
+    gapless # gtk4 audio player
+
+    # packages required for video processing on dGPU on firefox
+    nvidia-vaapi-driver
+    vdpauinfo
+    libva
+    libva-utils
   ];
 }

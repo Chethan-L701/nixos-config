@@ -15,16 +15,17 @@
 }
 
 @import "style/mocha.css";
+@import "style/wal.css";
 /* @import "style/theme.css"; */
 
 window#waybar {
     /* background-color: @background; */
-    background-color: @mantle;
+    background-color: @background;
     border-radius: 0px;
 }
 
 #window {
-    color: @red;
+    color: @color2;
     padding-top: 8px;
     font-size: 14px;
     min-height: 34px;
@@ -46,7 +47,7 @@ window#waybar {
 }
 
 tooltip {
-    background: @base;
+    background: @background;
     opacity: 1;
     border-radius: 2px;
     border-width: 2px;
@@ -57,7 +58,7 @@ tooltip {
 
 tooltip label {
     font-size: 16px;
-    color: @blue;
+    color: @color2;
 }
 
 #workspaces button {
@@ -96,10 +97,8 @@ tooltip label {
 #idle_inhibitor,
 #clock,
 #pulseaudio,
-#network,
 #tray,
 #workspaces,
-#battery,
 #mpris,
 #custom-nightlight,
 #custom-notify,
@@ -109,6 +108,10 @@ tooltip label {
     padding: 10px 5px;
 }
 
+#custom-kanata{
+    padding-top: 5px;
+}
+
 /*
 ########################
 Modules top
@@ -116,7 +119,7 @@ Modules top
 */
 
 #custom-overview {
-    color: @blue;
+    color: @color2;
     padding: 15px 20px 0px 15px;
     font-size: 15px;
     border-radius: 15px;
@@ -124,9 +127,11 @@ Modules top
 
 #clock,
 #clock-calender {
-    color: @sapphire;
+    color: @color14;
     border-radius: 15px;
-    padding: 15px 0;
+    padding-top: 15px;
+    padding-bottom: 0px;
+    padding-left: 9px;
     margin-left: -2px;
     font-size: 12px;
 }
@@ -142,8 +147,9 @@ Modules top
 }
 
 #custom-notify {
-    color: @peach;
+    color: @color12;
     margin-left: 0px;
+    padding-left: 6px;
 }
 
 /*
@@ -225,14 +231,14 @@ Modules Left
 
 #backlight {
     background-color: transparent;
-    color: @flamingo;
-    padding-left: 15px;
+    color: @color2;
+    padding-left: 16px;
     font-size: 16px;
     border-radius: 0 15px 15px 0;
 }
 
 #pulseaudio-slider {
-    margin-left: 2px;
+    margin-left: 4px;
 }
 
 #pulseaudio-slider slider {
@@ -254,20 +260,22 @@ Modules Left
 #pulseaudio-slider highlight {
     min-width: 5px;
     border-radius: 5px;
-    background-color: @blue;
+    background-color: @color10;
 }
 
 #pulseaudio {
     background-color: transparent;
-    margin-top: -5px;
-    margin-left: -3px;
-    color: @blue;
+    margin-top: -10px;
+    margin-left: 1px;
+    color: @color10;
 }
 
 
 
 #backlight-slider {
     margin-top: 10px;
+    margin-bottom: -10px;
+    margin-left: 4px;
 }
 
 #backlight-slider slider {
@@ -289,13 +297,13 @@ Modules Left
 #backlight-slider highlight {
     min-width: 5px;
     border-radius: 5px;
-    background-color: @peach;
+    background-color: @color7;
 }
 
 #backlight {
     background-color: transparent;
-    margin-top: -5px;
-    color: @peach;
+    margin-top: 0px;
+    color: @color7;
 }
 
 #custom-lock {
@@ -312,7 +320,7 @@ Modules Left
 
 #custom-logout,
 #custom-lock {
-    color: @green;
+    color: @color14;
     border-radius: 15px;
     font-size: 15px;
     font-weight: bolder;
@@ -325,7 +333,7 @@ Modules Left
 #custom-suspend,
 #custom-hibernate,
 #custom-power {
-    color: @red;
+    color: @color5;
     border-radius: 15px;
     font-size: 15px;
     font-weight: bolder;
@@ -340,17 +348,32 @@ Modules Left
 }
 
 #custom-dots {
-    color: @sapphire;
+    color: @color2;
     font-size: 15px;
 }
 
 #custom-system,
 #custom-cpu-icon,
 #custom-disk-icon,
+#network,
+#battery,
 #custom-memory-icon {
     font-size: 14px;
     padding:0px 4px;
     color: @teal;
+}
+
+#network,
+#battery {
+    padding: 10px;
+}
+
+#network {
+    color: @mauve;
+}
+
+#battery {
+    color : @green;
 }
 
 #custom-system {
@@ -369,8 +392,8 @@ Modules Left
 
 
 #custom-kanata {
-    color: @teal;
-    padding-left: 6px;
-    padding-bottom: 4px;
+    color: @color12;
+    padding-left: 8px;
     font-size: 15px;
+    padding-bottom: 10px;
 }

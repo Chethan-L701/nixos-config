@@ -35,6 +35,7 @@
     networkmanagerapplet # network manager tools
     libmtp # MTP protocal help file communication btw android and linux
     wirelesstools # iwconfig, etc.,
+    nmgui
   ];
 
 }

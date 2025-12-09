@@ -39,6 +39,7 @@
       fastfetch # prints basic info on the system and its status
       killall # uses name of the program to kill all the instance of the program running
       swww # wallpaper engine for wayland
+      pywal # generate wallpaper based color schemes
 
       #cli tolls
       feh # image viewer
@@ -55,12 +56,13 @@
       nixd # ...
 
       # ides and editors
+      (blender.override { cudaSupport = true; })
       godot # Game development software
       zed-editor # minimal gui editor
+      jetbrains.rust-rover
+      vscode
 
       # social
-      thunderbird # Email client
-      whatsapp-for-linux # Private messaging tool
       discord # Social Connectivity Software with channels
       betterdiscordctl # Extend Discord capabilities
 

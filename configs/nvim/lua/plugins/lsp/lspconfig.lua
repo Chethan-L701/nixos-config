@@ -1,46 +1,23 @@
 return {
     {
-        "j-hui/fidget.nvim",
-        tag = "legacy",
-        event = "LspAttach",
-        opts = {
-            -- options
-        },
-        config = function()
-            require("fidget").setup({
-                blend = 0,
-                relative = "editor",
-            })
-            vim.api.nvim_set_hl(0, "FidgetTitle", { link = "NormalFloat" })
-            vim.api.nvim_set_hl(0, "FidgetTask", { link = "NormalFloat" })
-        end,
-        lazy = false,
-    },
-    {
         "neovim/nvim-lspconfig",
         config = function()
-            local vim = vim
             local util = require("lspconfig.util")
-
-            vim.lsp.config('lua_ls', {
+            vim.lsp.config("lua_ls", {
                 on_init = function(client)
                     local path = client.workspace_folders[1].name
+                    local runtimepath = vim.api.nvim_get_runtime_file("", true)
                     if
                         not vim.loop.fs_stat(path .. "/.luarc.json") and not vim.loop.fs_stat(path .. "/.luarc.jsonc")
                     then
                         client.config.settings = vim.tbl_deep_extend("force", client.config.settings, {
                             Lua = {
                                 runtime = {
-                                    -- Tell the language server which version of Lua you're using
-                                    -- (most likely LuaJIT in the case of Neovim)
                                     version = "LuaJIT",
                                 },
-                                -- Make the server awre of Neovim runtime files
                                 workspace = {
                                     checkThirdParty = false,
-                                    library = {
-                                        vim.o.runtimepath,
-                                    },
+                                    library = runtimepath,
                                 },
                                 diagnostics = {},
                                 telemetry = { enable = false },
@@ -59,25 +36,11 @@ return {
                     return true
                 end,
             })
-            vim.lsp.enable('lua_ls')
+            vim.lsp.enable("lua_ls")
 
-            vim.lsp.config('ts_ls', {
-                init_options = {
-                    preferences = {
-                        includeInlayParameterNameHints = "all",
-                        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                        includeInlayFunctionParameterTypeHints = true,
-                        includeInlayVariableTypeHints = true,
-                        includeInlayPropertyDeclarationTypeHints = true,
-                        includeInlayFunctionLikeReturnTypeHints = true,
-                        includeInlayEnumMemberValueHints = true,
-                        importModuleSpecifierPreference = "non-relative",
-                    },
-                },
-            })
-            vim.lsp.enable('ts_ls')
+            vim.lsp.enable("nixd")
 
-            vim.lsp.config('rust_analyzer', {
+            vim.lsp.config("rust_analyzer", {
                 -- Server-specific settings. See `:help lspconfig-setup`
                 settings = {
                     ["rust-analyzer"] = {
@@ -90,38 +53,7 @@ return {
                     },
                 },
             })
-            vim.lsp.enable('rust_analyzer')
-
-            vim.lsp.config('gopls', {
-                settings = {
-                    gopls = {
-                        ["ui.inlayhint.hints"] = {
-                            compositeLiteralFields = true,
-                            constantValues = true,
-                            parameterNames = true,
-                        },
-                    },
-                },
-            })
-            vim.lsp.enable('gopls')
-
-            vim.lsp.enable('pyright')
-            vim.lsp.enable('ols')
-            vim.lsp.enable('cmake')
-            vim.lsp.enable('nixd')
-            vim.lsp.enable('emmet_ls')
-            vim.lsp.enable('jsonls')
-            vim.lsp.config('clangd', {
-                cmd = {
-                    "clangd",
-                    "--clang-tidy",
-                },
-            })
-            vim.lsp.enable('clangd')
-            vim.lsp.config('zls', {
-                root_dir = util.root_pattern("zls.json", "build.zig", ".git"),
-            })
-            vim.lsp.enable('zls')
+            vim.lsp.enable("rust_analyzer")
 
             -- Global mappings.
             -- See `:help vim.diagnostic.*` for documentation on any of the below functions
