@@ -1,0 +1,78 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+    "buffer_font_family": "Cartograph CF",
+    "ui_font_family": ".ZedSans",
+    "project_panel": {
+        "dock": null,
+    },
+    "base_keymap": "VSCode",
+    "icon_theme": "Catppuccin Mocha",
+    "telemetry": {
+        "diagnostics": false,
+        "metrics": false,
+    },
+    "inlay_hints": {
+        "enabled": true,
+    },
+    "agent": {
+        "enabled": false,
+    },
+    "vim": {
+        "toggle_relative_line_numbers": true,
+        "use_system_clipboard": "always",
+    },
+    "toolbar": {
+        "agent_review": false,
+        "code_actions": false,
+    },
+    "edit_predictions": {
+        "disabled_globs": ["*"],
+        "mode": "subtle",
+    },
+    "edit_predictions_disabled_in": [],
+    "tab_bar": {
+        "show_tab_bar_buttons": true,
+    },
+    "title_bar": {
+        "show_onboarding_banner": false,
+    },
+    "minimap": {
+        "show": "never",
+    },
+    "scrollbar": {
+        "show": "never",
+    },
+    "vim_mode": true,
+    "ui_font_size": 18,
+    "indent_guides": {
+        "enabled": true,
+    },
+
+    "git": {
+        "git_gutter": null,
+        "gutter_debounce": null,
+        "inline_blame": {
+            "enabled": true,
+            "delay_ms": 500,
+        },
+        "branch_picker": null,
+        "hunk_style": "staged_hollow",
+    },
+    "terminal": {
+        "font_family": "Mononoki Nerd Font Mono",
+    },
+    "tab_size": 4,
+    "buffer_font_size": 15,
+    "theme": {
+        "mode": "dark",
+        "light": "One Light",
+        "dark": "Catppuccin Mocha (Blur)",
+    },
+}

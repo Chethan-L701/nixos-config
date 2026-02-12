@@ -12,15 +12,24 @@
         terminal = "kitty";
         explorer = "nautilus";
       };
+      bar.tray = {
+        compact = true;
+      };
       paths.wallpaperDir = "/etc/nixos/wallpapers";
       border.rounding = 16;
-      background.visualizer = {
+      background = {
         enabled = false;
-        blur = false;
+        visualizer = {
+          enabled = false;
+          blur = false;
+        };
       };
     };
     cli = {
       enable = true; # Also add caelestia-cli to path
+      settings = {
+        theme.enableGtk = false;
+      };
     };
   };
 }

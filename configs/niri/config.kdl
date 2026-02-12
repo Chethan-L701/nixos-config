@@ -115,7 +115,7 @@ cursor {
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 4
+    gaps 0
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -199,7 +199,7 @@ layout {
         // If you enable the border, you probably want to disable the focus ring.
         // off
 
-        width 4
+        width 0
         active-color "#2e2e3e"
         inactive-color "#1e1e2e"
 
@@ -267,6 +267,7 @@ layout {
 
 // This line starts status bar,
 spawn-at-startup "swww-daemon"
+spawn-at-startup "vicinae server"
 spawn-at-startup "/etc/nixos/scripts/waybar-startup-niri.sh"
 spawn-at-startup "swaync"
 
@@ -362,6 +363,18 @@ window-rule {
     match app-id=r#"kew"#
     open-floating false
     default-column-width { proportion 0.50; }
+}
+
+window-rule {
+    match app-id=r#"com.gabm.satty"#
+    open-floating true
+}
+window-rule {
+    match app-id=r#"peaclock"#
+    open-floating true
+    default-floating-position x=10 y=10 relative-to="top-right"
+    default-column-width { proportion 0.33; }
+    default-window-height { fixed 360; }
 }
 
 window-rule {
@@ -613,7 +626,7 @@ binds {
     // Makes the column "fill the rest of the space".
     Mod+Ctrl+F { expand-column-to-available-width; }
 
-    Mod+C { center-column; }
+    Mod+Shift+C { center-column; }
 
     // Center all fully visible columns on screen.
     Mod+Ctrl+C { center-visible-columns; }
@@ -671,13 +684,14 @@ binds {
     Mod+Shift+P { spawn "pavucontrol"; }
     Mod+N { spawn "swaync-client" "-t" "-sw"; }
     Mod+Alt+K { spawn "kitten" "quick-access-terminal" "-o" "edge=bottom" "--" "/etc/nixos/scripts/kitty-quick-access.sh"; }
-    Alt+V { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }
+    // Alt+V { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }
     Mod+Period { spawn "vicinae" "vicinae://extensions/mmazzarolo@raycast/unicode-symbols/index"; }
     Mod+Comma { spawn "vicinae" "vicinae://extensions/FezVrasta/emoji/emoji"; }
     Mod+T { spawn "/etc/nixos/scripts/toggle-top-waybar.sh"; }
-    Mod+Shift+T { spawn "ocr-select"; }
+    Mod+Shift+T { spawn "/etc/nixos/scripts/ocr-select"; }
     Mod+M { spawn "/etc/nixos/scripts/g4music.sh"; }
     Mod+semicolon { spawn "kitten" "quick-access-terminal" "-o" "edge=bottom" "--" "nvim" "/home/chethan/scratch.md"; }
     Mod+Ctrl+O { spawn "obs"; }
     Mod+Alt+C { spawn "kitty" "--session" "~/.config/kitty/sessions/configs.kitty-session"; }
+    Mod+C {spawn "/etc/nixos/scripts/peaclock-kitty.sh";}
 }

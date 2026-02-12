@@ -29,6 +29,7 @@
       };
     };
   };
+
   systemd.services.kanata = {
     wantedBy = [ "multi-user.target" ];
     before = [
@@ -38,6 +39,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+
     #monitoring tools
     usbutils # tools to configure and monitor usb parts
     pciutils # tools to configure and monitor pci port in the main board
@@ -54,8 +56,5 @@
     htop # better top (task manager)
     btop # fancy htop
 
-    # keyboard and inputs
-    kanata-with-cmd
-    whisper-cpp-vulkan
   ];
 }

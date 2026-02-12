@@ -1,5 +1,5 @@
 local get_header = function()
-    header = {
+    local header = {
         [[                                                                     ]],
         [[       ████ ██████           █████      ██                     ]],
         [[      ███████████             █████                             ]],
@@ -16,6 +16,21 @@ local get_header = function()
 
     return text
 end
+
+Split = function(inputstr, sep)
+    local t = {}
+    sep = sep or "%s+"
+    local pattern = "([^" .. sep .. "]+)"
+    for str in string.gmatch(inputstr, pattern) do
+        table.insert(t, str)
+    end
+    return t
+end
+
+
+---@type string
+local configdir = Split(vim.o.runtimepath, ',')[1]
+
 ---@type snacks.Config
 local opts = {
     bigfile = { enabled = true },
@@ -28,14 +43,15 @@ local opts = {
             {
                 pane = 1,
                 section = "terminal",
-                cmd = "peaclock --config-dir $HOME/.config/peaclock",
-                height = 10,
-                padding = 1,
+                -- cmd = "chafa " .. configdir .. "/images/2b.jpg" .. " -s 60x60 -f symbols --symbols braille",
+                cmd = "chafa " .. configdir .. "/images/2b.jpg" .. " -s 60x60",
+                height = 30,
+                padding = 0,
             },
-            { pane = 1, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 2 },
-            { pane = 1, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 2 },
+            { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+            { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
             {
-                pane = 1,
+                pane = 2,
                 icon = " ",
                 title = "Git Status",
                 section = "terminal",
@@ -44,12 +60,19 @@ local opts = {
                 end,
                 cmd = "git status --short --branch --renames",
                 height = 5,
-                padding = 5,
+                padding = 1,
                 ttl = 5 * 60,
                 indent = 3,
             },
-            { section = "header", pane = 2, },
-            { section = "keys",   pane = 2, gap = 1, padding = 1 },
+            {
+                pane = 2,
+                section = "terminal",
+                cmd = "peaclock --config-dir $HOME/.config/peaclock",
+                height = 8,
+                padding = 1,
+            },
+            -- { section = "header", pane = 2, },
+            -- { section = "keys",   pane = 2, gap = 2, padding = 1 },
             -- { section = "startup" },
         },
     },

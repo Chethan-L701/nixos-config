@@ -1,11 +1,19 @@
 source ~/.cache/wal/colors.sh
-options="htop\nyazi\nbluetui\nopen-file\nwallpapers\ntmux-sessions\nswitch-windows\nplayerctl"
+options="htop\nyazi\nbluetui\nopen-file\nwallpapers\ntmux-sessions\nswitch-windows\nplayerctl\nnushell\nfish"
 
 selection=$(printf $options | fzf)
 
 if [ "$selection" == "htop" ]; then
 
     htop
+
+elif [ "$selection" == "fish" ]; then
+
+    fish
+
+elif [ "$selection" == "nushell" ]; then
+
+    nu
 
 elif [ "$selection" == "yazi" ]; then
 
@@ -20,9 +28,9 @@ elif [ "$selection" == "open-file" ]; then
     file=$(fd -u -t f | fzf)
     if [ -n "$file" ]; then
         if [ "$DESKTOP_SESSION" == "niri" ]; then
-            niri msg action spawn -- xdg-open $file
+            niri msg action spawn -- xdg-open "$file"
         elif [ "$DESKTOP_SESSION" == "hyprland-uwsm" ]; then
-            hyprctl dispatch exec -- xdg-open $file 
+            hyprctl dispatch exec -- xdg-open "$file"
         fi
     fi
 

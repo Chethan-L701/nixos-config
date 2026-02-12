@@ -1,5 +1,1 @@
-require("core.autocmds")
-require("core.options")
-require("core.keymaps")
-require("core.diagnostics").setup({})
-require("plugins.lazy")
+/nix/store/igqrgdf9pif3k620054093xx9001sfz8-home-manager-files/.config/nvim/init.lua

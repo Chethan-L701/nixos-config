@@ -22,6 +22,7 @@ let
     "nvim"
     "nvim-old"
     "yazi"
+    "zed"
   ];
 in
 {
@@ -133,7 +134,13 @@ in
 
   services.vicinae = {
     enable = true;
-    autoStart = true;
+    systemd = {
+      enable = true; # default: false
+      autoStart = true; # default: false
+      environment = {
+        USE_LAYER_SHELL = 1;
+      };
+    };
     settings = {
       faviconService = "twenty";
       theme.name = "catppuccin-mocha";

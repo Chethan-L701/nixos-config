@@ -5,13 +5,13 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.wrap = false
 vim.opt.cursorline = true
-vim.wo.fillchars = "eob: "
 vim.opt.termguicolors = true
 vim.opt.expandtab = true
 vim.opt.showmode = false
 vim.opt.laststatus = 3
 vim.opt.signcolumn = "yes"
 vim.opt.pumheight = 15
+vim.wo.fillchars = "eob: "
 -- vim.opt.cmdheight = 0
 
 vim.opt.termguicolors = true

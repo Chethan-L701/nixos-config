@@ -3,14 +3,13 @@
 
   home.packages = with pkgs; [
     neovim-remote
-    nixfmt-rfc-style
+    nixfmt
     lua-language-server
     stylua
     inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   programs.neovim = {
-
     enable = true;
     package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
     extraLuaPackages = ps: [
@@ -23,5 +22,9 @@
       pkgs.ghostscript
       pkgs.lazygit
     ];
+    initLua = ''
+      require("plugins.lazy")
+      require("core")
+    '';
   };
 }

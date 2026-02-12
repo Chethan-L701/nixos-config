@@ -1,7 +1,6 @@
 { ... }:
 {
   environment.variables = {
-    XDG_CURRENT_DESKTOP = "Hyprland";
     NIXPKGS_ALLOW_UNFREE = "1";
     BROWSER = "firefox";
     EDITOR = "nvim";

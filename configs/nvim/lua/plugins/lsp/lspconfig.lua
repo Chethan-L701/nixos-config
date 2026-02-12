@@ -39,6 +39,8 @@ return {
             vim.lsp.enable("lua_ls")
 
             vim.lsp.enable("nixd")
+            vim.lsp.enable('hls')
+            vim.lsp.enable('ts_ls')
 
             vim.lsp.config("rust_analyzer", {
                 -- Server-specific settings. See `:help lspconfig-setup`
@@ -54,6 +56,7 @@ return {
                 },
             })
             vim.lsp.enable("rust_analyzer")
+            vim.lsp.enable("clangd")
 
             -- Global mappings.
             -- See `:help vim.diagnostic.*` for documentation on any of the below functions

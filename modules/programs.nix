@@ -24,14 +24,12 @@
 
   environment.systemPackages = with pkgs; [
     # C / C++
-    clang-tools
     gcc
-
-    # Rust
-    rustup
+    gnumake
 
     #editors
-    vim # vim
+    vim # vim editors
+    emacs # emacs editor
 
     #terminals
     ghostty # terminal emulator
@@ -47,5 +45,10 @@
     tesseract # ocr tool
     wget # similar to curl, fetch(get) things from web
     socat # networking tool
+    bc # calculator
+
+    direnv
+    nix-direnv
+
   ];
 }

@@ -66,7 +66,7 @@
 (deflayer symb
   esc    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10       f11  f12
   grv    S-1  S-2  S-3  S-4  S-5  S-6  S-7  S-8  S-9  S-0       -    =    bspc
-  tab    S-1  S-8  '    S-'  S-4  S-6  S-[  S-]  grv  S-grv     [    ]    \
+  tab    S--  S-8  '    S-'  S-4  S-6  S-[  S-]  grv  S-grv     [    ]    \
   caps   S-=  -    /    =    S-7  S-\  S-9  S-0  S-;  ;         '    ret
   lsft   S-2  S-3  S-,  S-.  S-/  [    ]    ,    .    /    ▲         rsft
   lctl        lalt lmet         spc         rmet ralt ◀    ▼    ▶

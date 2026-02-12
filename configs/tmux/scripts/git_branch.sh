@@ -36,8 +36,8 @@ get_git_status() {
 
     echo "$status_info"
 }
-dir="$(tmux display-message -p -F "#{pane_current_path}")"
-current_dir="$dir"
+# dir="$(tmux display-message -p -F "#{pane_current_path}")"
+current_dir="/home/chethan/workspace/rust/merc/"
 
 close() {
     local status_info="$1"
@@ -66,5 +66,5 @@ while [ "$current_dir" != "/" ]; do
     current_dir=$(dirname "$current_dir")
 done
 
-echo ""
+echo "$current_dir"
 
