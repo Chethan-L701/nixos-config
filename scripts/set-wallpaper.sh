@@ -7,7 +7,7 @@ wallpaper_sel=$(cd $wallpaper_dir && \
     --preview-window "right,50%,border-left")
 
 if [ -n "$wallpaper_sel" ]; then
-    swww img --transition-type wave "$wallpaper_dir/$wallpaper_sel"
+    awww img --transition-type wave "$wallpaper_dir/$wallpaper_sel"
     wal -i "$wallpaper_dir/$wallpaper_sel"
 
     source ~/.cache/wal/colors.sh
@@ -38,20 +38,11 @@ if [ -n "$wallpaper_sel" ]; then
     set -U color14 '${color14}'
     set -U color15 '${color15}'
 
-    # Shell colors
-    set -U fish_color_normal normal
-    set -U fish_color_command $(echo $color1 | sed 's/#\(.*\)/\1/g')
-    set -U fish_color_param $(echo $color5 | sed 's/#\(.*\)/\1/g')
-    set -U fish_pager_color_completion
-    set -U fish_pager_color_description $fish_color_quote yellow
-    set -U fish_pager_color_progress brwhite --background=cyan
-    set -U fish_color_history_current --bold
-
     # FZF colors
     set -gx FZF_DEFAULT_OPTS \"
     $FZF_DEFAULT_OPTS
     --color fg:7,bg:0,hl:1,fg+:232,bg+:1,hl+:255
     --color info:7,prompt:2,spinner:1,pointer:232,marker:1
     \"
-    " > ~/.config/fish/themes/wal.fish
+    " > ~/.config/fish/themes/fzf.fish
 fi

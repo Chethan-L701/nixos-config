@@ -33,10 +33,12 @@
   '';
 
   powerManagement.enable = true;
-  systemd.sleep.extraConfig = ''
-    HibernateDelaySec=1h
-    SuspendState=mem
-  '';
+
+  # TODO: Changes in the option names
+  #systemd.sleep.extraConfig = ''
+  #  HibernateDelaySec=1h
+  #  SuspendState=mem
+  #'';
 
   # sleep settings
   services.logind = {

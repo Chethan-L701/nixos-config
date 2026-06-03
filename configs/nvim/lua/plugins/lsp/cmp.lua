@@ -181,16 +181,17 @@ return {
             "ols",
             "zls",
         }
-        local handler = {
-            ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-            ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {}),
-        }
+
+        -- local handler = {
+        --     ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
+        --     ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {}),
+        -- }
 
 
         local lspconfig = require("lspconfig")
         for _, lsp in ipairs(servers) do
             vim.lsp.config(lsp, {
-                handlers = handler,
+                -- handlers = handler,
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
                     if client.server_capabilities["documentSymbolProvider"] then
@@ -199,6 +200,6 @@ return {
                 end,
             })
         end
-        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+        -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
     end,
 }

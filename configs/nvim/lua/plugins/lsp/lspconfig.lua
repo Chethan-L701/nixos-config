@@ -57,6 +57,7 @@ return {
             })
             vim.lsp.enable("rust_analyzer")
             vim.lsp.enable("clangd")
+            vim.lsp.enable('basedpyright')
 
             -- Global mappings.
             -- See `:help vim.diagnostic.*` for documentation on any of the below functions
