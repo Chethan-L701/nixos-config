@@ -1,4 +1,15 @@
 { pkgs, inputs, ... }:
+let
+  tsRuntime = inputs.treesitter-nvim.lib.mkRuntime {
+    pkgs = pkgs;
+    languages = [
+      "c"
+      "cpp"
+      "rust"
+      "nix"
+    ];
+  };
+in
 {
 
   home.packages = with pkgs; [
@@ -11,6 +22,9 @@
 
   programs.neovim = {
     enable = true;
+    withRuby = false;
+    withPython3 = true;
+    withNodeJs = true;
     package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
     extraLuaPackages = ps: [
       ps.magick
@@ -25,6 +39,7 @@
     initLua = ''
       require("plugins.lazy")
       require("core")
+      vim.opt.runtimepath:prepend("${tsRuntime}")
     '';
   };
 }

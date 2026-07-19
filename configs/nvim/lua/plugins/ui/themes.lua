@@ -75,6 +75,14 @@ return {
             },
         }
     },
+    -- lua/plugins/rose-pine.lua
+    {
+        "rose-pine/neovim",
+        name = "rose-pine",
+        config = function()
+            vim.cmd("colorscheme rose-pine")
+        end
+    },
     {
         "idr4n/github-monochrome.nvim",
         lazy = false,

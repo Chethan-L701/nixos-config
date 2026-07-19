@@ -7,6 +7,18 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+    "show_signature_help_after_edits": true,
+    "auto_signature_help": true,
+    "cli_default_open_behavior": "new_window",
+    "outline_panel": {
+        "dock": "right"
+    },
+    "collaboration_panel": {
+        "dock": "right"
+    },
+    "git_panel": {
+        "dock": "right"
+    },
     "which_key": {
         "enabled": true
     },
@@ -16,7 +28,8 @@
     "buffer_font_family": "Cartograph CF",
     "ui_font_family": ".ZedSans",
     "project_panel": {
-        "dock": null,
+        "show_diagnostics": "errors",
+        "dock": "right",
     },
     "base_keymap": "VSCode",
     "icon_theme": "Material Icon Theme",
@@ -28,6 +41,7 @@
         "enabled": true,
     },
     "agent": {
+        "dock": "left",
         "enabled": false,
     },
     "vim": {
@@ -39,6 +53,7 @@
         "code_actions": false,
     },
     "edit_predictions": {
+        "provider": "zed",
         "disabled_globs": ["*"],
         "mode": "subtle",
     },
@@ -50,6 +65,8 @@
         "show_onboarding_banner": false,
     },
     "minimap": {
+        "thumb_border": "left_open",
+        "display_in": "active_editor",
         "show": "never",
     },
     "scrollbar": {
@@ -75,7 +92,7 @@
         "font_family": "Mononoki Nerd Font Mono",
     },
     "tab_size": 4,
-    "buffer_font_size": 15,
+    "buffer_font_size": 18.0,
     "theme": {
         "mode": "dark",
         "light": "One Light",

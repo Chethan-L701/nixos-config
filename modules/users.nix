@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   users.defaultUserShell = pkgs.fish;
 
@@ -33,11 +33,10 @@
       unzip # to extract zip files
       unrar # to extract winrar files
       lsd # prettier ls command
-      tmux # a terminal multiplexer
       gh # cli tool to manage github
       fastfetch # prints basic info on the system and its status
       killall # uses name of the program to kill all the instance of the program running
-      swww # wallpaper engine for wayland
+      awww # wallpaper engine for wayland
       pywal # generate wallpaper based color schemes
       file # give the file info
 
@@ -54,22 +53,23 @@
       #C/C++
       cmake # configuration tools C/C++ language
       ninja # build tool for C/C++ (alternative to make)
+      inputs.raddebugger.packages.${pkg.stdenv.hostPlatform.system}.default # debugger
+
       #nix
       nil # nix lsp
       nixd # ...
       nh # nix search
+      mcp-nixos
+
       # json
       vscode-json-languageserver
       prettier
-
       # python
       python3
       pyright
-
       # haskell
       ghc
       haskell-language-server
-
       # ides and editors
       zed-editor # minimal gui editor
       vscode
@@ -82,9 +82,17 @@
       # kdePackages.kdenlive
       gimp # Image editing software
       inkscape # svg editor
+      drawy # whiteboard
 
       # Browser
       chromium # base chromium browser
+
+      # ai tools
+      antigravity-cli
+
+      #netscope
+      inputs.netscope.packages.${pkgs.stdenv.hostPlatform.system}.default
+
     ];
   };
 }

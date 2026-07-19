@@ -13,6 +13,7 @@
     enable = true;
     enableSSHSupport = true;
   };
+  programs.nix-index-database.comma.enable = true;
 
   services.openssh.enable = true;
 
@@ -30,10 +31,15 @@
     #editors
     vim # vim editors
     emacs # emacs editor
+    delta # diff pager
 
     #terminals
     ghostty # terminal emulator
     kitty # terminal emulator fallback
+
+    # terminal plexar
+    zellij
+    tmux
 
     # nvim and wez
     lua51Packages.lua # lua language interpreter
@@ -49,6 +55,5 @@
 
     direnv
     nix-direnv
-
   ];
 }

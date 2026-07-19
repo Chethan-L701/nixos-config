@@ -18,7 +18,7 @@ M.set_highlights = function()
     })
 
     vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#2e2e3e", bold = true })
-    vim.api.nvim_set_hl(0, "Normal", { bg = 'none' })
+    -- vim.api.nvim_set_hl(0, "Normal", { bg = 'none' })
     vim.api.nvim_set_hl(0, "NotifyBackground", { bg = "#2e2e3e", bold = true })
 end
 ---@param colorscheme string

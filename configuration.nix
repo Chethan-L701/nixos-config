@@ -8,6 +8,10 @@
   # nixpkgs.config.allowBroken = true;
   nixpkgs.config.cudaSupport = true;
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "openclaw-2026.6.1"
+  ];
+
   # Set your time zone.
   time.timeZone = "Asia/Kolkata";
 
@@ -36,5 +40,6 @@
     ./modules/locales.nix
     ./modules/fixes.nix
     ./modules/variables.nix
+    ./modules/secrets.nix
   ];
 }

@@ -32,5 +32,16 @@
         "text/xml"
       ];
     };
+
+    antigravity = {
+      name = "Antigravity IDE";
+      icon = "antigravity";
+      genericName = "AI IDE";
+      exec = "antigravity-ide";
+      terminal = false;
+      categories = [
+        "Development"
+      ];
+    };
   };
 }

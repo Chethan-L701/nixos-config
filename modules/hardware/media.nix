@@ -33,6 +33,7 @@
     playerctl # media controls for next, prev , puase , play , etc.
     imagemagick # image manipulation tool
     gapless # gtk4 audio player
+    # kdePackages.kdenlive # video editor
 
     # packages required for video processing on dGPU on firefox
     nvidia-vaapi-driver

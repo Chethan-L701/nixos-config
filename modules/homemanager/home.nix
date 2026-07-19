@@ -33,15 +33,17 @@ in
   home.enableNixpkgsReleaseCheck = false;
 
   imports = [
-    inputs.catppuccin.homeModules.catppuccin
+    # inputs.catppuccin.homeModules.catppuccin
     inputs.vicinae.homeManagerModules.default
     inputs.zen-browser.homeModules.beta
     inputs.caelestia-shell.homeManagerModules.default
+    inputs.nix-openclaw.homeManagerModules.openclaw
     ./nvim.nix
     ./nushell.nix
     ./spicetify.nix
     ./caelestia.nix
     ./desktop-entries.nix
+    ./openclaw.nix
   ];
 
   home.stateVersion = "24.11"; # Please read the comment before changing.
@@ -49,6 +51,7 @@ in
     inputs.listwindows.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.kanata-client.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.cava-waybar-module.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.antigravity.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   home.file = { };
@@ -115,13 +118,13 @@ in
     };
   };
 
-  catppuccin.gtk = {
-    icon = {
-      enable = false;
-      accent = "mauve";
-      flavor = "mocha";
-    };
-  };
+  # catppuccin.gtk = {
+  #   icon = {
+  #     enable = false;
+  #     accent = "mauve";
+  #     flavor = "mocha";
+  #   };
+  # };
 
   home.pointerCursor = {
     gtk.enable = true;
@@ -132,7 +135,7 @@ in
   };
   programs.zen-browser.enable = true;
 
-  services.vicinae = {
+  programs.vicinae = {
     enable = true;
     systemd = {
       enable = true; # default: false

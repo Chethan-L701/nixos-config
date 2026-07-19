@@ -17,13 +17,6 @@
       };
       paths.wallpaperDir = "/etc/nixos/wallpapers";
       border.rounding = 16;
-      background = {
-        enabled = false;
-        visualizer = {
-          enabled = false;
-          blur = false;
-        };
-      };
     };
     cli = {
       enable = true; # Also add caelestia-cli to path

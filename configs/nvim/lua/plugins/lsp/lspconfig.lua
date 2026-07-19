@@ -128,12 +128,15 @@ return {
                         { buffer = opts.buffer, desc = "Type defination" }
                     )
                     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = opts.buffer, desc = "Rename" })
-                    vim.keymap.set(
-                        { "n", "v" },
-                        "<leader>ca",
-                        vim.lsp.buf.code_action,
-                        { buffer = opts.buffer, desc = "Code Actions" }
-                    )
+                    -- vim.keymap.set(
+                    --     { "n", "v" },
+                    --     "<leader>ca",
+                    --     vim.lsp.buf.code_action,
+                    --     { buffer = opts.buffer, desc = "Code Actions" }
+                    -- )
+                    vim.keymap.set({ "n", "x" }, "<leader>ca", function()
+                        require("tiny-code-action").code_action()
+                    end, { noremap = true, silent = true, desc = "Tiny Code Actions Preview" })
                     vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = opts.buffer, desc = "References" })
                     vim.keymap.set("n", "<space>f", function()
                         vim.lsp.buf.format({ async = true })

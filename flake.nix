@@ -25,9 +25,28 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-openclaw = {
+      url = "github:openclaw/nix-openclaw";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     listwindows.url = "github:Chethan-L701/listwindows";
     kanata-client.url = "github:Chethan-L701/kanata-client";
     cava-waybar-module.url = "github:Chethan-L701/cava-waybar-module";
+    netscope.url = "github:Chethan-L701/netscope";
+    antigravity.url = "github:Chethan-L701/antigravity-flake";
+    raddebugger.url = "github:Chethan-L701/raddebugger-flake";
+    treesitter-nvim.url = "github:Chethan-L701/treesitter-nvim-flake";
+
   };
 
   outputs =
@@ -35,7 +54,6 @@
       self,
       nixpkgs,
       home-manager,
-      spicetify-nix,
       ...
     }:
     {
@@ -47,7 +65,10 @@
           ./modules/hosts/victus/hardware-configuration.nix
           ./modules/hosts/victus/device.nix
 
+          inputs.sops-nix.nixosModules.sops
           inputs.home-manager.nixosModules.default
+          inputs.nix-index-database.nixosModules.default
+
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -60,6 +81,7 @@
           {
             nixpkgs = {
               overlays = [
+                inputs.nix-openclaw.overlays.default
               ];
             };
           }

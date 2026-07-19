@@ -2,6 +2,7 @@
 {
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.nftables.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.hostName = "nixos"; # Define your hostname.
   networking.nameservers = [

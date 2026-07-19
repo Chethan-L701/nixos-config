@@ -13,7 +13,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.pumheight = 15
 vim.wo.fillchars = "eob: "
 -- vim.opt.cmdheight = 0
-
+--
 vim.opt.termguicolors = true
 vim.o.guicursor = [[i-ci:hor15]]
 

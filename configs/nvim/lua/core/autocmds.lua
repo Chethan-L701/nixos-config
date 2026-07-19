@@ -18,3 +18,9 @@ autocmd("VimLeavePre", {
     end,
     desc = "save the current session state in session.vim"
 })
+
+autocmd("FileType", {
+    callback = function(args)
+        pcall(vim.treesitter.start, args.buf)
+    end,
+})
