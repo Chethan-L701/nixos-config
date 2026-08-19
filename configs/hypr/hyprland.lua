@@ -64,6 +64,8 @@ hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("QT_IM_MODULE", "")
 hl.env("GTK_IM_MODULE", "")
+hl.env("GTK_USE_PORTAL", "1")
+
 
 -----------------------
 ----- PERMISSIONS -----
@@ -126,8 +128,8 @@ hl.config({
 
         blur = {
             enabled = true,
-            size = 3,
-            passes = 1,
+            size = 5,
+            passes = 2,
             vibrancy = 0.1696,
         },
     },
@@ -258,9 +260,19 @@ hl.device({
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 -- closeWindowBind:set_enabled(false)
 
+-- vicinae keybinds
 -- open menu
 hl.bind(mainMod .. " + " .. "space", hl.dsp.exec_cmd(menu))
+-- clipboard
+hl.bind("ALT + V", hl.dsp.exec_cmd("vicinae vicinae://launch/clipboard/history"))
+-- emojis
+hl.bind(mainMod .. " + " .. "PERIOD", hl.dsp.exec_cmd("vicinae vicinae://launch/core/search-emojis"))
+-- translate
+hl.bind(mainMod .. " + " .. "T", hl.dsp.exec_cmd("vicinae vicinae://launch/@gebeto/store.raycast.translate/translate"))
 
+
+-- calculator
+hl.bind("XF86Calculator", hl.dsp.exec_cmd("/etc/nixos/scripts/calculator.sh"))
 -- close window
 local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 
@@ -272,6 +284,7 @@ hl.bind(mainMod .. " + SHIFT + " .. "return", hl.dsp.exec_cmd(terminal_alt))
 hl.bind("print", hl.dsp.exec_cmd("hyprshot -m window"))
 hl.bind(mainMod .. " + " .. "print", hl.dsp.exec_cmd("hyprshot -m output"))
 hl.bind("SHIFT " .. " + " .. "print", hl.dsp.exec_cmd("hyprshot -m region"))
+hl.bind(mainMod .. " + SHIFT + " .. "P", hl.dsp.window.pin())
 
 -- caelestia
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("caelestia shell drawers toggle sidebar"))
@@ -323,12 +336,11 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 --     { locked = true, repeating = true })
 -- hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
 --     { locked = true, repeating = true })
-
-hl.bind(
-    "XF86AudioMute",
-    hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
-    { locked = true, repeating = true }
-)
+-- hl.bind(
+--     "XF86AudioMute",
+--     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
+--     { locked = true, repeating = true }
+-- )
 hl.bind(
     "XF86AudioMicMute",
     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
@@ -419,4 +431,19 @@ hl.window_rule({
     name = "Palworld",
     match = { title = "Pal" },
     float = true,
+})
+
+hl.window_rule({
+    name = "Claculator",
+    match = { class = "org.gnome.Calculator" },
+    float = true,
+    move = "monitor_w-window_w-20 monitor_h-window_h-20"
+})
+
+hl.window_rule({
+    name = "termfilechooser",
+    match = { title = "termfilechooser" },
+    float = true,
+    center = true,
+    size = { "monitor_w * 0.75", "monitor_h * 0.6" }
 })
