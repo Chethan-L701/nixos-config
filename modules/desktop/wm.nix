@@ -22,7 +22,6 @@
     #hyprland and window management tools
     hyprsunset # reduce blue light from screen
     hyprlang # hyprland language support
-    hyprpanel # status panel
     hyprland-qtutils # hyprland tools
     mpvpaper # wallpaper engine (static, slideshow, live video, etc.)
     hyprpaper # set wallpaper (static)
@@ -39,5 +38,7 @@
     cava # Audia visualizer
     wl-clipboard # clipboard for wayland
     eww # widget system
+
+    wayle
   ];
 }

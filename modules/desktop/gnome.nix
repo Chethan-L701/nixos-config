@@ -17,6 +17,7 @@
     evolutionWithPlugins
   ];
 
+  services.gnome.gnome-keyring.enable = true;
   services.gnome.gnome-online-accounts.enable = false;
   services.gnome.evolution-data-server.enable = lib.mkForce false;
 }

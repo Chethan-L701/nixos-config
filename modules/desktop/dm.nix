@@ -25,6 +25,7 @@
     };
     wayland.enable = true;
   };
+  security.pam.services.sddm.enableGnomeKeyring = true;
 
   environment.systemPackages = with pkgs; [
     sddm-astronaut

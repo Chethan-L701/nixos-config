@@ -13,7 +13,10 @@
     enable = true;
     enableSSHSupport = true;
   };
+
   programs.nix-index-database.comma.enable = true;
+  programs.gpu-screen-recorder.enable = true;
+  programs.command-not-found.enable = false;
 
   services.openssh.enable = true;
 

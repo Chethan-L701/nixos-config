@@ -32,6 +32,7 @@
     ./modules/desktop/dm.nix
     ./modules/desktop/gnome.nix
     ./modules/desktop/wm.nix
+    ./modules/desktop/xdg-portal.nix
 
     ./modules/users.nix
     ./modules/programs.nix
