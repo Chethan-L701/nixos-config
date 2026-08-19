@@ -2,7 +2,7 @@
 
 wallpaper_dir="/etc/nixos/wallpapers"
 wallpaper_sel=$(cd $wallpaper_dir && \
-    fd -t f -e jpg -e png -e jpeg |fzf \
+    fd -t f -e jpg -e png -e jpeg | fzf --color='fg:7,pointer:14' \
     --preview='kitten icat --clear --transfer-mode=memory --place=80x40@95x0 --align center --stdin=no {} > /dev/tty' \
     --preview-window "right,50%,border-left")
 
@@ -11,7 +11,6 @@ if [ -n "$wallpaper_sel" ]; then
     wal -i "$wallpaper_dir/$wallpaper_sel"
 
     source ~/.cache/wal/colors.sh
-
     echo "
     set -U wallpaper \"${wallpaper}\"
 
@@ -37,12 +36,5 @@ if [ -n "$wallpaper_sel" ]; then
     set -U color13 '${color13}'
     set -U color14 '${color14}'
     set -U color15 '${color15}'
-
-    # FZF colors
-    set -gx FZF_DEFAULT_OPTS \"
-    $FZF_DEFAULT_OPTS
-    --color fg:7,bg:0,hl:1,fg+:232,bg+:1,hl+:255
-    --color info:7,prompt:2,spinner:1,pointer:232,marker:1
-    \"
     " > ~/.config/fish/themes/fzf.fish
 fi
