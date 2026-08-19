@@ -1,0 +1,1 @@
+/home/chethan/.local/state/caelestia/theme/colors.lua

@@ -41,6 +41,7 @@ return {
             vim.lsp.enable("nixd")
             vim.lsp.enable('hls')
             vim.lsp.enable('ts_ls')
+            vim.lsp.enable('gopls')
 
             vim.lsp.config("rust_analyzer", {
                 -- Server-specific settings. See `:help lspconfig-setup`

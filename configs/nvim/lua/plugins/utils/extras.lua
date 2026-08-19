@@ -45,7 +45,7 @@ return {
         },
     },
     {
-        "catgoose/nvim-colorizer.lua",
+        "norcalli/nvim-colorizer.lua",
         event = "BufReadPre",
         lazy = false,
     },

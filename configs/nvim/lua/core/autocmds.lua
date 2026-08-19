@@ -24,3 +24,10 @@ autocmd("FileType", {
         pcall(vim.treesitter.start, args.buf)
     end,
 })
+
+autocmd("BufWritePost", {
+    pattern = "*.go",
+    callback = function()
+        vim.cmd "lsp restart"
+    end,
+})
