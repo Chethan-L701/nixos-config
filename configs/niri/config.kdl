@@ -266,8 +266,6 @@ layout {
 // See the binds section below for more spawn examples.
 
 spawn-at-startup "awww-daemon"
-spawn-at-startup "vicinae server"
-spawn-at-startup "/etc/nixos/scripts/waybar-startup-niri.sh"
 spawn-at-startup "swaync"
 
 

@@ -318,7 +318,7 @@ format = " nim [$symbol($version )]($style)"
 
 [custom.nix_dev_shell]
 when = 'test -n "$NIX_DEV_SHELL"'
-command = 'printf "%s" "$NIX_DEV_SHELL"'
+command = 'fish -c "printf %s $NIX_DEV_SHELL"'
 format = '[($output)](italic dimmed white) '
 
 [nix_shell]
